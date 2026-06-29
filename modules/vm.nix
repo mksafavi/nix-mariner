@@ -24,6 +24,11 @@
     };
   };
 
+  microvm = {
+    vcpu = 4;
+    mem = 4096;
+  };
+
   microvm.shares = [
     {
       tag = "ro-store";
