@@ -47,4 +47,11 @@
       fsType = "none";
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /persist/home 0755 root root -"
+    "d /persist/var/lib/docker 0710 root root -"
+    "d /persist/ssh 0755 root root -"
+  ];
+
 }
