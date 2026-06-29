@@ -1,5 +1,10 @@
 { config, ... }:
 {
+
+  microvm.hypervisor = "qemu";
+
+  networking.hostName = "vm";
+
   systemd.network.enable = true;
 
   microvm.interfaces = [

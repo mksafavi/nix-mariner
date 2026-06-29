@@ -16,10 +16,6 @@
           microvm.nixosModules.microvm
           modules/common.nix
           modules/vm.nix
-          {
-            networking.hostName = "vm";
-            microvm.hypervisor = "qemu";
-          }
         ];
       };
     };
