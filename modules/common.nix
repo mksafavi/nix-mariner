@@ -12,6 +12,7 @@
       "wheel"
       "docker"
     ];
+    shell = pkgs.bash;
     packages = with pkgs; [
       git
       gh
