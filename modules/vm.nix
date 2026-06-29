@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   microvm.interfaces = [
     {
@@ -13,6 +13,14 @@
       tag = "ro-store";
       source = "/nix/store";
       mountPoint = "/nix/.ro-store";
+    }
+  ];
+
+  microvm.volumes = [
+    {
+      image = "/var/lib/microvms/${config.networking.hostName}/persist.img";
+      mountPoint = "/persist";
+      size = 8 * 1024;
     }
   ];
 }
