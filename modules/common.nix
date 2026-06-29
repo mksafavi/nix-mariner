@@ -18,11 +18,17 @@
       lf
       vim
     ];
+    openssh.authorizedKeys.keys = [
+      (lib.fileContents ../keys/host.pub)
+    ];
   };
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
 
   programs.direnv = {
     enable = true;
