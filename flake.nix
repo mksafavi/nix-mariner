@@ -14,6 +14,7 @@
         system = "x86_64-linux";
         modules = [
           microvm.nixosModules.microvm
+          modules/common.nix
           {
             networking.hostName = "vm";
             microvm.hypervisor = "qemu";
