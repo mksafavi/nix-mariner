@@ -23,4 +23,12 @@
       size = 8 * 1024;
     }
   ];
+
+  fileSystems = {
+    "/home" = {
+      device = "/persist/home";
+      options = [ "bind" ];
+      fsType = "none";
+    };
+  };
 }
