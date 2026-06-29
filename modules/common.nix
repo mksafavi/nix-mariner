@@ -13,6 +13,10 @@
       "docker"
     ];
     packages = with pkgs; [
+      git
+      gh
+      lf
+      vim
     ];
   };
 
