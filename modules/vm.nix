@@ -30,5 +30,10 @@
       options = [ "bind" ];
       fsType = "none";
     };
+    "/var/lib/docker" = {
+      device = "/persist/var/lib/docker";
+      options = [ "bind" ];
+      fsType = "none";
+    };
   };
 }
