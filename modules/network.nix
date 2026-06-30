@@ -1,12 +1,13 @@
 {
   config,
+  lib,
   ...
 }:
 {
 
   systemd.network.enable = true;
 
-  microvm.interfaces = [
+  microvm.interfaces = lib.mkDefault [
     {
       type = "tap";
       id = "vm-${config.networking.hostName}";
@@ -14,7 +15,7 @@
     }
   ];
 
-  systemd.network.networks."10-lan" = {
+  systemd.network.networks."10-lan" = lib.mkDefault {
     matchConfig.Type = "ether";
     networkConfig = {
       Address = [ "10.0.0.2/24" ];
