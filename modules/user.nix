@@ -1,11 +1,22 @@
 {
+  config,
   pkgs,
+  lib,
   ...
 }:
+
+let
+  vmUser = config.mariner.username;
+in
 {
-  users.users.vm = {
+  options.mariner.username = lib.mkOption {
+    type = lib.types.str;
+    default = "vm";
+    description = "VM user account";
+  };
+  config.users.users.${vmUser} = {
     isNormalUser = true;
-    description = "vm";
+    description = vmUser;
     extraGroups = [
       "wheel"
       "docker"

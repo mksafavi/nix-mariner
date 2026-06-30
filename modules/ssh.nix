@@ -3,6 +3,9 @@
   hostAuthorizedKey,
   ...
 }:
+let
+  vmUser = config.mariner.username;
+in
 {
   services.openssh = {
     enable = true;
@@ -15,7 +18,7 @@
     ];
   };
 
-  users.users.vm.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
+  users.users.${vmUser}.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
 
   users.users.root.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
 }

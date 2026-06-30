@@ -2,6 +2,9 @@
   config,
   ...
 }:
+let
+  vmUser = config.mariner.username;
+in
 {
   microvm.writableStoreOverlay = "/nix/.rw-store";
 
@@ -41,7 +44,7 @@
 
   systemd.tmpfiles.rules = [
     "d /persist/home 0755 root root -"
-    "d /persist/home/vm 0700 vm users -"
+    "d /persist/home/${vmUser} 0700 ${vmUser} users -"
     "d /persist/var/lib/docker 0710 root root -"
     "d /persist/ssh 0755 root root -"
   ];
