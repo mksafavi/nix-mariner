@@ -12,6 +12,7 @@
     let
       specialArgs = {
         inherit nixpkgs;
+        hostAuthorizedKey = nixpkgs.lib.fileContents ./keys/host.pub;
       };
     in
     {

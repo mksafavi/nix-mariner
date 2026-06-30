@@ -3,6 +3,7 @@
   pkgs,
   nixpkgs,
   lib,
+  hostAuthorizedKey,
   ...
 }:
 {
@@ -21,7 +22,7 @@
       vim
     ];
     openssh.authorizedKeys.keys = [
-      (lib.fileContents ../keys/host.pub)
+      hostAuthorizedKey
     ];
   };
 
