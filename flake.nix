@@ -24,6 +24,7 @@
           modules/common.nix
           modules/vm.nix
           modules/storage.nix
+          modules/network.nix
         ];
       };
     };
