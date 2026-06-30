@@ -29,6 +29,8 @@
     mem = 4096;
   };
 
+  microvm.writableStoreOverlay = "/nix/.rw-store";
+
   microvm.shares = [
     {
       tag = "ro-store";
@@ -42,6 +44,11 @@
       image = "/var/lib/microvms/${config.networking.hostName}/persist.img";
       mountPoint = "/persist";
       size = 8 * 1024;
+    }
+    {
+      image = "/var/lib/microvms/${config.networking.hostName}/nix-store.img";
+      mountPoint = "/nix/.rw-store";
+      size = 32 * 1024;
     }
   ];
 
