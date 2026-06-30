@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  nixpkgs,
   lib,
   ...
 }:
@@ -43,10 +44,21 @@
     nix-direnv.enable = true;
   };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix = {
+    enable = true;
+    registry.nixpkgs.flake = nixpkgs;
+    nixPath = [
+      "nixpkgs=flake:${nixpkgs}"
+    ];
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+  };
+
+  nixpkgs.config.allowUnfree = true;
 
   virtualisation.docker.enable = true;
 
