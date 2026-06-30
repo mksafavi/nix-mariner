@@ -37,5 +37,15 @@
         ]
         ++ builtins.attrValues self.nixosModules;
       };
+
+      devShells.default =
+        with import nixpkgs { inherit system; };
+        mkShell {
+          buildInputs = [
+            nixfmt
+            nixfmt-tree
+            nix-fast-build
+          ];
+        };
     };
 }
