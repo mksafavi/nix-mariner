@@ -1,13 +1,11 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
-  networking.hostName = "vm";
+  networking.hostName = lib.mkDefault "vm";
 
-  microvm.hypervisor = "qemu";
+  microvm.hypervisor = lib.mkDefault "qemu";
 
-  microvm = {
-    vcpu = 4;
-    mem = 4096;
-  };
+  microvm.vcpu = lib.mkDefault 4;
+  microvm.mem = lib.mkDefault 4096;
 
-  microvm.vsock.cid = 3;
+  microvm.vsock.cid = lib.mkDefault 3;
 }
