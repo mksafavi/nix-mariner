@@ -16,19 +16,22 @@
       };
     in
     {
+      nixosModules = {
+        common = modules/common.nix;
+        vm = modules/vm.nix;
+        storage = modules/storage.nix;
+        network = modules/network.nix;
+        user = modules/user.nix;
+        ssh = modules/ssh.nix;
+        nix = modules/nix.nix;
+      };
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         inherit specialArgs;
         modules = [
           microvm.nixosModules.microvm
-          modules/common.nix
-          modules/vm.nix
-          modules/storage.nix
-          modules/network.nix
-          modules/user.nix
-          modules/ssh.nix
-          modules/nix.nix
-        ];
+        ]
+        ++ builtins.attrValues self.nixosModules;
       };
     };
 }
