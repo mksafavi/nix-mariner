@@ -29,6 +29,8 @@
     mem = 4096;
   };
 
+  microvm.vsock.cid = 3;
+
   microvm.writableStoreOverlay = "/nix/.rw-store";
 
   microvm.shares = [

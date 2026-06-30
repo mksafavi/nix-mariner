@@ -26,6 +26,8 @@
     ];
   };
 
+  users.users.root.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
+
   security.sudo.wheelNeedsPassword = false;
 
   services.openssh = {
