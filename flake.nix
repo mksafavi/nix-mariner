@@ -27,6 +27,7 @@
           modules/network.nix
           modules/user.nix
           modules/ssh.nix
+          modules/nix.nix
         ];
       };
     };
