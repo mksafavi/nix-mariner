@@ -10,6 +10,7 @@
       microvm,
     }:
     let
+      system = "x86_64-linux";
       specialArgs = {
         inherit nixpkgs;
       };
@@ -24,8 +25,9 @@
         ssh = modules/ssh.nix;
         nix = modules/nix.nix;
       };
+
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         inherit specialArgs;
         modules = [
           microvm.nixosModules.microvm
