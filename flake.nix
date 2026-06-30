@@ -23,6 +23,7 @@
           microvm.nixosModules.microvm
           modules/common.nix
           modules/vm.nix
+          modules/storage.nix
         ];
       };
     };
