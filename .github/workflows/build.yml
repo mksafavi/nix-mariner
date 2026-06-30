@@ -1,0 +1,31 @@
+name: build flake
+
+on:
+  workflow_dispatch: # allows manual triggering
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7.0.0
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: rrbutani/use-nix-shell-action@v1
+        with:
+          devShell: .#devShells.default
+      - run: |
+          treefmt --ci
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7.0.0
+      - uses: wimpysworld/nothing-but-nix@main
+        with:
+          hatchet-protocol: 'holster'
+          root-safe-haven: '10240'
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: rrbutani/use-nix-shell-action@v1
+        with:
+          devShell: .#devShells.default
+      - run: |
+          nix-fast-build
