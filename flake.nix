@@ -26,6 +26,7 @@
           modules/storage.nix
           modules/network.nix
           modules/user.nix
+          modules/ssh.nix
         ];
       };
     };

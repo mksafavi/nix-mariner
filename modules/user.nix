@@ -1,6 +1,5 @@
 {
   pkgs,
-  hostAuthorizedKey,
   ...
 }:
 {
@@ -18,10 +17,5 @@
       lf
       vim
     ];
-    openssh.authorizedKeys.keys = [
-      hostAuthorizedKey
-    ];
   };
-
-  users.users.root.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
 }
