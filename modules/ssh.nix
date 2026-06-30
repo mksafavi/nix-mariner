@@ -1,13 +1,19 @@
 {
   config,
-  hostAuthorizedKey,
+  lib,
   ...
 }:
 let
   vmUser = config.mariner.username;
+  hostAuthorizedKey = config.mariner.hostAuthorizedKey;
 in
 {
-  services.openssh = {
+  options.mariner.hostAuthorizedKey = lib.mkOption {
+    type = lib.types.str;
+    description = "SSH authorized public key for vm user and root";
+  };
+
+  config.services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
     hostKeys = [
@@ -18,7 +24,7 @@ in
     ];
   };
 
-  users.users.${vmUser}.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
+  config.users.users.${vmUser}.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
 
-  users.users.root.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
+  config.users.users.root.openssh.authorizedKeys.keys = [ hostAuthorizedKey ];
 }

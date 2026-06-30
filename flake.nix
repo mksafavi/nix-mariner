@@ -12,7 +12,6 @@
     let
       specialArgs = {
         inherit nixpkgs;
-        hostAuthorizedKey = nixpkgs.lib.fileContents ./keys/host.pub;
       };
     in
     {
@@ -30,6 +29,9 @@
         inherit specialArgs;
         modules = [
           microvm.nixosModules.microvm
+          {
+            mariner.hostAuthorizedKey = nixpkgs.lib.fileContents ./keys/host.pub;
+          }
         ]
         ++ builtins.attrValues self.nixosModules;
       };
