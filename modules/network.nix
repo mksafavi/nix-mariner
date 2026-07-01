@@ -6,8 +6,16 @@
 {
   options.mariner.address = lib.mkOption {
     type = lib.types.str;
-    example = "10.0.0.2/24";
+    default = "10.0.0.${toString config.mariner.cid}/24";
     description = "Static IPv4 address assigned to the LAN interface.";
+  };
+
+  options.mariner.mac = lib.mkOption {
+    type = lib.types.str;
+    default = "02:00:00:00:00:${
+      lib.fixedWidthString 2 "0" (lib.toLower (lib.toHexString config.mariner.cid))
+    }";
+    description = "MAC address for the LAN interface.";
   };
 
   config.systemd.network.enable = true;
@@ -16,7 +24,7 @@
     {
       type = "tap";
       id = "vm-${config.networking.hostName}";
-      mac = "02:00:00:00:00:01";
+      mac = config.mariner.mac;
     }
   ];
 

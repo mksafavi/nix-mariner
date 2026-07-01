@@ -34,7 +34,6 @@
           {
             mariner.cid = 3;
             mariner.hostAuthorizedKey = nixpkgs.lib.fileContents ./keys/host.pub;
-            mariner.address = "10.0.0.2/24";
           }
         ]
         ++ builtins.attrValues self.nixosModules;
