@@ -23,7 +23,7 @@
   config.microvm.interfaces = lib.mkDefault [
     {
       type = "tap";
-      id = "vm-${config.networking.hostName}";
+      id = "microvm-${toString config.mariner.cid}";
       mac = config.mariner.mac;
     }
   ];
