@@ -34,11 +34,13 @@ in
       device = "/persist/home";
       options = [ "bind" ];
       fsType = "none";
+      depends = [ "/persist" ];
     };
     "/var/lib/docker" = {
       device = "/persist/var/lib/docker";
       options = [ "bind" ];
       fsType = "none";
+      depends = [ "/persist" ];
     };
   };
 
