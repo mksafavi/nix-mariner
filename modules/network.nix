@@ -4,10 +4,15 @@
   ...
 }:
 {
+  options.mariner.address = lib.mkOption {
+    type = lib.types.str;
+    example = "10.0.0.2/24";
+    description = "Static IPv4 address assigned to the LAN interface.";
+  };
 
-  systemd.network.enable = true;
+  config.systemd.network.enable = true;
 
-  microvm.interfaces = lib.mkDefault [
+  config.microvm.interfaces = lib.mkDefault [
     {
       type = "tap";
       id = "vm-${config.networking.hostName}";
@@ -15,10 +20,10 @@
     }
   ];
 
-  systemd.network.networks."10-lan" = lib.mkDefault {
+  config.systemd.network.networks."10-lan" = lib.mkDefault {
     matchConfig.Type = "ether";
     networkConfig = {
-      Address = [ "10.0.0.2/24" ];
+      Address = [ config.mariner.address ];
       Gateway = "10.0.0.1";
       DNS = [ "10.0.0.1" ];
     };
