@@ -12,7 +12,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
       - uses: rrbutani/use-nix-shell-action@v1
         with:
-          devShell: .#devShells.default
+          devShell: .#devShells.x86_64-linux.default
       - run: |
           treefmt --ci
   build:
@@ -26,6 +26,6 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
       - uses: rrbutani/use-nix-shell-action@v1
         with:
-          devShell: .#devShells.default
+          devShell: .#devShells.x86_64-linux.default
       - run: |
           nix-fast-build

@@ -39,7 +39,7 @@
         ++ builtins.attrValues self.nixosModules;
       };
 
-      devShells.default =
+      devShells.${system}.default =
         with import nixpkgs { inherit system; };
         mkShell {
           buildInputs = [
@@ -56,7 +56,7 @@
           ) self.nixosConfigurations;
           devShellsAttrs = nixpkgs.lib.mapAttrs' (
             n: nixpkgs.lib.nameValuePair "devShell-${n}"
-          ) self.devShells;
+          ) self.devShells.${system};
         in
         (systemsAttrs // devShellsAttrs);
     };
