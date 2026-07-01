@@ -1,14 +1,28 @@
 {
   config,
+  lib,
   ...
 }:
 let
   vmUser = config.mariner.username;
 in
 {
-  microvm.writableStoreOverlay = "/nix/.rw-store";
+  options.mariner.storage = {
+    persistSizeMiB = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 8 * 1024;
+      description = "Size of the /persist volume in MiB.";
+    };
+    nixStoreSizeMiB = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 32 * 1024;
+      description = "Size of the writable Nix store overlay in MiB.";
+    };
+  };
 
-  microvm.shares = [
+  config.microvm.writableStoreOverlay = "/nix/.rw-store";
+
+  config.microvm.shares = [
     {
       tag = "ro-store";
       source = "/nix/store";
@@ -16,20 +30,20 @@ in
     }
   ];
 
-  microvm.volumes = [
+  config.microvm.volumes = [
     {
       image = "/var/lib/microvms/${config.networking.hostName}/persist.img";
       mountPoint = "/persist";
-      size = 8 * 1024;
+      size = config.mariner.storage.persistSizeMiB;
     }
     {
       image = "/var/lib/microvms/${config.networking.hostName}/nix-store.img";
       mountPoint = "/nix/.rw-store";
-      size = 32 * 1024;
+      size = config.mariner.storage.nixStoreSizeMiB;
     }
   ];
 
-  fileSystems = {
+  config.fileSystems = {
     "/home" = {
       device = "/persist/home";
       options = [ "bind" ];
@@ -44,7 +58,7 @@ in
     };
   };
 
-  systemd.tmpfiles.rules = [
+  config.systemd.tmpfiles.rules = [
     "d /persist/home 0755 root root -"
     "d /persist/home/${vmUser} 0700 ${vmUser} users -"
     "d /persist/var/lib/docker 0710 root root -"
