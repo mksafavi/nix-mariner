@@ -32,12 +32,12 @@ in
 
   config.microvm.volumes = [
     {
-      image = "/var/lib/microvms/${config.networking.hostName}/persist.img";
+      image = "persist.img";
       mountPoint = "/persist";
       size = config.mariner.storage.persistSizeMiB;
     }
     {
-      image = "/var/lib/microvms/${config.networking.hostName}/nix-store.img";
+      image = "nix-store.img";
       mountPoint = "/nix/.rw-store";
       size = config.mariner.storage.nixStoreSizeMiB;
     }
