@@ -6,24 +6,24 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7.0.0
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v22
       - uses: rrbutani/use-nix-shell-action@v1
         with:
           devShell: .#devShells.default
       - run: |
           treefmt --ci
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7.0.0
-      - uses: wimpysworld/nothing-but-nix@main
+      - uses: actions/checkout@v7
+      - uses: wimpysworld/nothing-but-nix@v10
         with:
           hatchet-protocol: 'holster'
           root-safe-haven: '10240'
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/nix-installer-action@v22
       - uses: rrbutani/use-nix-shell-action@v1
         with:
           devShell: .#devShells.default
