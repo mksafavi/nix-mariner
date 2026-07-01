@@ -24,13 +24,13 @@
         user = modules/user.nix;
         ssh = modules/ssh.nix;
         nix = modules/nix.nix;
+        microvm = microvm.nixosModules.microvm;
       };
 
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
         inherit system;
         inherit specialArgs;
         modules = [
-          microvm.nixosModules.microvm
           {
             mariner.hostAuthorizedKey = nixpkgs.lib.fileContents ./keys/host.pub;
             mariner.address = "10.0.0.2/24";
