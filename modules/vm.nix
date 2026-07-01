@@ -1,14 +1,22 @@
 {
+  config,
   lib,
   ...
 }:
 {
-  networking.hostName = lib.mkDefault "vm";
+  options.mariner.cid = lib.mkOption {
+    type = lib.types.ints.unsigned;
+    description = "VSOCK context ID. Must be >= 3 and unique per host";
+  };
 
-  microvm.hypervisor = lib.mkDefault "qemu";
+  config = {
+    networking.hostName = lib.mkDefault "vm";
 
-  microvm.vcpu = lib.mkDefault 4;
-  microvm.mem = lib.mkDefault 4096;
+    microvm.hypervisor = lib.mkDefault "qemu";
 
-  microvm.vsock.cid = lib.mkDefault 3;
+    microvm.vcpu = lib.mkDefault 4;
+    microvm.mem = lib.mkDefault 4096;
+
+    microvm.vsock.cid = config.mariner.cid;
+  };
 }
