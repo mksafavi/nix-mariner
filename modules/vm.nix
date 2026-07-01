@@ -1,4 +1,7 @@
-{ config, lib, ... }:
+{
+  lib,
+  ...
+}:
 {
   networking.hostName = lib.mkDefault "vm";
 
