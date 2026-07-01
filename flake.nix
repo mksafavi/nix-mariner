@@ -33,7 +33,7 @@
         modules = [
           {
             mariner.cid = 3;
-            mariner.hostAuthorizedKey = nixpkgs.lib.fileContents ./keys/host.pub;
+            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
           }
         ]
         ++ builtins.attrValues self.nixosModules;
