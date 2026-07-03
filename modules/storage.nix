@@ -20,7 +20,7 @@ in
     };
   };
 
-  config.microvm.writableStoreOverlay = "/nix/.rw-store";
+  config.microvm.writableStoreOverlay = "/nix-store/.rw-store";
 
   config.microvm.shares = [
     {
@@ -38,7 +38,7 @@ in
     }
     {
       image = "nix-store.img";
-      mountPoint = "/nix/.rw-store";
+      mountPoint = "/nix-store";
       size = config.mariner.storage.nixStoreSizeMiB;
     }
   ];
@@ -49,6 +49,12 @@ in
       options = [ "bind" ];
       fsType = "none";
       depends = [ "/persist" ];
+    };
+    "/nix/var" = {
+      device = "/nix-store/var";
+      options = [ "bind" ];
+      fsType = "none";
+      depends = [ "/nix-store" ];
     };
     "/var/lib/docker" = {
       device = "/persist/var/lib/docker";
@@ -62,6 +68,7 @@ in
     "d /persist/home 0755 root root -"
     "d /persist/home/${vmUser} 0700 ${vmUser} users -"
     "d /persist/var/lib/docker 0710 root root -"
+    "d /nix-store/var 0755 root root -"
     "d /persist/ssh 0755 root root -"
   ];
 
