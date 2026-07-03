@@ -25,7 +25,7 @@ in
     };
   };
 
-  config.microvm.writableStoreOverlay = "/nix-store/.rw-store";
+  config.microvm.writableStoreOverlay = "/nix/.rw-store";
 
   config.microvm.shares = [
     {
@@ -43,7 +43,7 @@ in
     }
     {
       image = "nix-store.img";
-      mountPoint = "/nix-store";
+      mountPoint = "/nix/.rw-store";
       size = config.mariner.storage.nixStoreSizeMiB;
     }
     {
@@ -61,10 +61,10 @@ in
       depends = [ "/persist" ];
     };
     "/nix/var" = {
-      device = "/nix-store/var";
+      device = "/nix/.rw-store/var";
       options = [ "bind" ];
       fsType = "none";
-      depends = [ "/nix-store" ];
+      depends = [ "/nix/.rw-store" ];
     };
   };
 
