@@ -16,7 +16,7 @@ Built on [microvm.nix](https://github.com/microvm-nix/microvm.nix).
 
 Host prerequisites (one-time): follow [`docs/host-setup.md`](docs/host-setup.md) to add the bridge, DNS, and firewall settings that microvm.nix expects.
 
-Add nix-mariner as a flake input and create a nixosConfigurations.<vm> derivation.
+Add nix-mariner as a flake input and create a `nixosConfigurations.<vm>` derivation.
 
 flake.nix for creating a VM called example:
 ```nix
