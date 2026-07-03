@@ -16,5 +16,10 @@
     microvm.mem = lib.mkDefault 4096;
 
     microvm.vsock.cid = config.mariner.cid;
+
+    boot.tmp = {
+      useTmpfs = true;
+      tmpfsSize = "80%";
+    };
   };
 }
