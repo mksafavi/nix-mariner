@@ -10,12 +10,14 @@
   };
 
   config = {
-    microvm.hypervisor = lib.mkDefault "qemu";
+    microvm = {
+      hypervisor = lib.mkDefault "qemu";
 
-    microvm.vcpu = lib.mkDefault 4;
-    microvm.mem = lib.mkDefault 4096;
+      vcpu = lib.mkDefault 4;
+      mem = lib.mkDefault 4096;
 
-    microvm.vsock.cid = config.mariner.cid;
+      vsock.cid = config.mariner.cid;
+    };
 
     boot.tmp = {
       useTmpfs = true;
