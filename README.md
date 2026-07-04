@@ -2,14 +2,14 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-NixOS microVM modules for sandboxing untrusted development work.
+NixOS microVM modules for creating development environments that isolated untrusted code from your host.
 
 Built on [microvm.nix](https://github.com/microvm-nix/microvm.nix).
 
 ## What it does
 
-- Sandboxes untrusted code away from the host.
 - Provides NixOS modules importable as a flake input.
+- Creates persistent microVM environments to isolate untrusted code away from the host.
 - Preconfigured: SSH, Docker, direnv, shared `/nix/store`, persistent storage, bridge networking, etc.
 
 ## Quick start
