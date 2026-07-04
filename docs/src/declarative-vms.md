@@ -33,12 +33,6 @@ Create a `virtualization.nix` module and import it into your host setup:
           mariner.cid = 4;
           mariner.username = "work";
           mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host";
-          microvm = {
-            vcpu = 4;
-            mem = 8 * 1024;
-          };
-
-          users.users.${config.mariner.username}.packages = with pkgs; [ htop ];
         };
     };
 
@@ -51,12 +45,6 @@ Create a `virtualization.nix` module and import it into your host setup:
           mariner.cid = 5;
           mariner.username = "user";
           mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host";
-          microvm = {
-            vcpu = 2;
-            mem = 3 * 1024;
-          };
-
-          users.users.${config.mariner.username}.packages = with pkgs; [ btop ];
         };
     };
   };

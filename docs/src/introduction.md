@@ -25,4 +25,8 @@ VMs defined inside the host's NixOS configurations with `microvm.vms.<name>`.
 
 See [Declarative Virtual Machines](declarative-vms.md).
 
+### Per-VM Customizations
+You can change and override microvm.nix and nixos module configurations for each VM.
+Overrides work the same in both imperative and declarative modes.
 
+See [Customizing VMs][customization.md].
