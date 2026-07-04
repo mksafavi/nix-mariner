@@ -7,6 +7,7 @@
   options.mariner.address = lib.mkOption {
     type = lib.types.str;
     default = "10.0.0.${toString config.mariner.cid}/24";
+    defaultText = "Derived from `mariner.cid`";
     description = "Static IPv4 address assigned to the LAN interface.";
   };
 
@@ -15,6 +16,7 @@
     default = "02:00:00:00:00:${
       lib.fixedWidthString 2 "0" (lib.toLower (lib.toHexString config.mariner.cid))
     }";
+    defaultText = "Derived from `mariner.cid`";
     description = "MAC address for the LAN interface.";
   };
 
