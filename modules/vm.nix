@@ -19,7 +19,7 @@
       vsock.cid = config.mariner.cid;
     };
 
-    boot.tmp = {
+    boot.tmp = lib.mkDefault {
       useTmpfs = true;
       tmpfsSize = "80%";
     };
