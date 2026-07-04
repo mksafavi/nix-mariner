@@ -15,9 +15,7 @@
       specialArgs = {
         inherit nixpkgs;
       };
-    in
-    {
-      nixosModules = {
+      modules = {
         common = modules/common.nix;
         vm = modules/vm.nix;
         storage = modules/storage.nix;
@@ -25,6 +23,10 @@
         user = modules/user.nix;
         ssh = modules/ssh.nix;
         nix = modules/nix.nix;
+      };
+    in
+    {
+      nixosModules = modules // {
         microvm = microvm.nixosModules.microvm;
       };
 
@@ -41,7 +43,7 @@
       };
 
       packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
-        modules = self.nixosModules;
+        modules = modules;
         sourceInfo = {
           repo = "https://github.com/mksafavi/nix-mariner";
           rev = self.rev or null;
