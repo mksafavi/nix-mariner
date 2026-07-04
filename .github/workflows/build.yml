@@ -15,6 +15,15 @@ jobs:
           devShell: .#devShells.x86_64-linux.default
       - run: |
           treefmt --ci
+
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v22
+      - run: |
+          nix flake check --all-systems
+
   build:
     runs-on: ubuntu-24.04
     steps:
