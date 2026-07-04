@@ -2,9 +2,16 @@
   lib,
   pkgs,
   modules,
+  sourceInfo,
   ...
 }:
 let
+  url =
+    if sourceInfo.rev != null then
+      "${sourceInfo.repo}/tree/${sourceInfo.rev}"
+    else
+      "${sourceInfo.repo}/tree/${sourceInfo.ref}";
+
   makeOptionsDoc =
     modules:
     pkgs.nixosOptionsDoc {
@@ -23,6 +30,26 @@ let
         )
         options
         ;
+      transformOptions =
+        opt:
+        opt
+        // {
+          declarations = map (
+            decl:
+            let
+              root = toString ../.;
+              declStr = toString decl;
+              declPath = lib.removePrefix root decl;
+            in
+            if lib.hasPrefix root declStr then
+              {
+                name = declPath;
+                url = "${url}${declPath}";
+              }
+            else
+              decl
+          ) opt.declarations;
+        };
     };
 
   optionDocs = makeOptionsDoc (builtins.attrValues modules);
