@@ -11,6 +11,7 @@
     }:
     let
       system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
       specialArgs = {
         inherit nixpkgs;
       };
@@ -37,6 +38,10 @@
           }
         ]
         ++ builtins.attrValues self.nixosModules;
+      };
+
+      packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
+        modules = self.nixosModules;
       };
 
       devShells.${system}.default =
