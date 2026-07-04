@@ -25,6 +25,11 @@ in
     };
   };
 
+  config.services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
   config.microvm.writableStoreOverlay = "/nix/.rw-store";
 
   config.microvm.shares = [
