@@ -70,7 +70,10 @@
           devShellsAttrs = nixpkgs.lib.mapAttrs' (
             n: nixpkgs.lib.nameValuePair "devShell-${n}"
           ) self.devShells.${system};
+          docsAttrs = {
+            "docs" = self.packages.${system}.docs;
+          };
         in
-        (systemsAttrs // devShellsAttrs);
+        (systemsAttrs // devShellsAttrs // docsAttrs);
     };
 }
