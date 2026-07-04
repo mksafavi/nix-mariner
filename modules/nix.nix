@@ -17,8 +17,6 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
