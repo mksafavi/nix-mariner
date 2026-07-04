@@ -29,4 +29,4 @@ See [Declarative Virtual Machines](declarative-vms.md).
 You can change and override microvm.nix and nixos module configurations for each VM.
 Overrides work the same in both imperative and declarative modes.
 
-See [Customizing VMs][customization.md].
+See [Customizing VMs](customization.md).
