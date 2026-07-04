@@ -1,0 +1,8 @@
+[book]
+authors = ["mksafavi"]
+language = "en"
+src = "src"
+title = "nix-mariner"
+
+[output.html]
+git-repository-url = "https://github.com/mksafavi/nix-mariner"

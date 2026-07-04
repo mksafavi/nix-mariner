@@ -113,7 +113,7 @@ If you change the default bridge address `10.0.0.1`, you also need to set the ne
 ```
 
 ## Verify
-
+After a `nixos-rebuild switch` you should have the following:
 ```bash
 ls /dev/kvm                        # exists
 ip addr show br-microvm            # has 10.0.0.1/24

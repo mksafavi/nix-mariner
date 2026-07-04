@@ -46,6 +46,7 @@
             nixfmt
             nixfmt-tree
             nix-fast-build
+            mdbook
           ];
         };
 

@@ -14,7 +14,7 @@ Built on [microvm.nix](https://github.com/microvm-nix/microvm.nix).
 
 ## Quick start
 
-Host prerequisites (one-time): follow [`docs/host-setup.md`](docs/host-setup.md) to add the bridge, DNS, and firewall settings that microvm.nix expects.
+Host prerequisites (one-time): follow [`docs/src/host-setup.md`](docs/src/host-setup.md) to add the bridge, DNS, and firewall settings that microvm.nix expects.
 
 Add nix-mariner as a flake input and create a `nixosConfigurations.<vm>` derivation.
 
@@ -74,7 +74,7 @@ See [`examples/flake.nix`](examples/flake.nix) for a stand-alone flake example.
 
 ## Docs
 
-- [`docs/host-setup.md`](docs/host-setup.md) — host NixOS additions
+- [`docs/src/host-setup.md`](docs/src/host-setup.md) — host NixOS additions
   (bridge, NAT, DNS, firewall). Set this up once.
 
 ## License
