@@ -1,6 +1,7 @@
 # nix-mariner
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Documentation](https://img.shields.io/badge/Documentation-mdbook-brightgreen)](https://mksafavi.github.io/nix-mariner/)
 
 NixOS microVM modules for creating development environments that isolated untrusted code from your host.
 
