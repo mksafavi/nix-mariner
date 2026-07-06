@@ -1,6 +1,6 @@
 # nix-mariner
 
-NixOS microVM modules for creating development environments that isolated untrusted code from your host.
+NixOS microVM modules for creating development environments that isolate untrusted code from your host.
 
 Built on [microvm.nix](https://github.com/microvm-nix/microvm.nix).
 
