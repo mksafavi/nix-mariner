@@ -23,6 +23,7 @@
         user = modules/user.nix;
         ssh = modules/ssh.nix;
         nix = modules/nix.nix;
+        distrobox = modules/distrobox.nix;
       };
     in
     {
