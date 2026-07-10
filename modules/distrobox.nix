@@ -1,4 +1,19 @@
-{ config, pkgs, ... }:
 {
-  users.users.${config.mariner.username}.packages = with pkgs; [ distrobox ];
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
+  options.mariner.distrobox = {
+    enable = lib.mkEnableOption "distrobox integration";
+  };
+
+  config = lib.mkIf config.mariner.distrobox.enable {
+
+    environment.systemPackages = with pkgs; [
+      distrobox
+    ];
+
+  };
 }
