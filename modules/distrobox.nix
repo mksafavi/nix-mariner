@@ -6,11 +6,11 @@
 }:
 let
   cfg = config.mariner.distrobox;
-  settingsFormat = pkgs.formats.ini { listsAsDuplicateKeys = true; };
-  settingsFile = settingsFormat.generate "distrobox.ini" cfg.settings;
+  distroboxManifestFormat = pkgs.formats.ini { listsAsDuplicateKeys = true; };
+  distroboxManifestFile = distroboxManifestFormat.generate "distrobox.ini" cfg.manifest;
 
   distroboxManifestType = lib.types.submodule {
-    freeformType = settingsFormat.type.nestedTypes.elemType;
+    freeformType = distroboxManifestFormat.type.nestedTypes.elemType;
 
     options.image = lib.mkOption {
       type = lib.types.str;
@@ -34,7 +34,7 @@ in
   options.mariner.distrobox = {
     enable = lib.mkEnableOption "distrobox integration";
 
-    settings = lib.mkOption {
+    manifest = lib.mkOption {
       type = lib.types.attrsOf distroboxManifestType;
       default = {
         ubuntu = {
@@ -71,7 +71,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "${pkgs.distrobox}/bin/distrobox assemble create --file ${settingsFile}";
+        ExecStart = "${pkgs.distrobox}/bin/distrobox assemble create --file ${distroboxManifestFile}";
       };
     };
   };
