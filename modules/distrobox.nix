@@ -34,6 +34,12 @@ in
   options.mariner.distrobox = {
     enable = lib.mkEnableOption "distrobox integration";
 
+    autoEnter = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = "ubuntu";
+      description = "Automatically enter distrobox on interactive login";
+    };
+
     manifest = lib.mkOption {
       type = lib.types.attrsOf distroboxManifestType;
       default = {
@@ -53,6 +59,19 @@ in
     environment.systemPackages = with pkgs; [
       distrobox
     ];
+
+    programs.bash.interactiveShellInit = lib.mkIf (cfg.autoEnter != null) (
+      lib.mkAfter ''
+        if [ -z "$CONTAINER_ID" ]; then
+          if ${config.virtualisation.docker.package}/bin/docker container inspect ${cfg.autoEnter} >/dev/null 2>&1; then
+            exec ${pkgs.distrobox}/bin/distrobox enter --no-workdir ${cfg.autoEnter}
+          else
+            echo "distrobox '${cfg.autoEnter}' not found, staying in the NixOS shell."
+            echo "Check: systemctl status distrobox-assemble"
+          fi
+        fi
+      ''
+    );
 
     systemd.services.distrobox-assemble = {
       description = "distrobox assemble service";
