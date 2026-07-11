@@ -60,5 +60,5 @@ The box is built at first boot, not at Nix build time, so the first start of a b
 By default SSH `exec`s you into the box shell. To reach the VM's NixOS shell without turning off `autoEnter`:
 
 ```shell
-ssh -t vm@<addr> 'bash --norc'   # NixOS shell (skips the autoEnter hook)
+ssh -o SetEnv=MARINER_NO_AUTOENTER=1 vm@<addr>
 ```

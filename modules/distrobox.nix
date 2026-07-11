@@ -92,9 +92,11 @@ in
       distrobox
     ];
 
+    services.openssh.settings.AcceptEnv = lib.mkIf (cfg.autoEnter != null) [ "MARINER_NO_AUTOENTER" ];
+
     programs.bash.interactiveShellInit = lib.mkIf (cfg.autoEnter != null) (
       lib.mkAfter ''
-        if [ -z "$CONTAINER_ID" ]; then
+        if [ -z "$CONTAINER_ID" ] && [ -z "$MARINER_NO_AUTOENTER" ]; then
           if ${config.virtualisation.docker.package}/bin/docker container inspect ${cfg.autoEnter} >/dev/null 2>&1; then
             exec ${pkgs.distrobox}/bin/distrobox enter --no-workdir ${cfg.autoEnter}
           else
