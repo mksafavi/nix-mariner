@@ -75,6 +75,8 @@ in
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
+        Restart = "on-failure";
+        RestartSec = "10s";
         User = config.mariner.username;
         ExecStart = "${pkgs.distrobox}/bin/distrobox assemble create --file ${distroboxManifestFile}";
       };
