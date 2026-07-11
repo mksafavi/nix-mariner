@@ -26,5 +26,25 @@ in
       distrobox
     ];
 
+    systemd.services.distrobox-assemble = {
+      description = "distrobox assemble service";
+      wantedBy = [ "multi-user.target" ];
+      after = [
+        "network-online.target"
+        "docker.service"
+      ];
+      wants = [
+        "network-online.target"
+      ];
+      requires = [
+        "docker.service"
+      ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.distrobox}/bin/distrobox assemble create --file ${settingsFile}";
+      };
+    };
   };
 }
