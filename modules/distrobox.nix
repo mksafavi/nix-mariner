@@ -9,26 +9,34 @@ let
   distroboxManifestFormat = pkgs.formats.ini { listsAsDuplicateKeys = true; };
   distroboxManifestFile = distroboxManifestFormat.generate "distrobox.ini" cfg.manifest;
 
-  distroboxManifestType = lib.types.submodule {
-    freeformType = distroboxManifestFormat.type.nestedTypes.elemType;
+  distroboxManifestType = lib.types.submodule (
+    { name, ... }: {
+      freeformType = distroboxManifestFormat.type.nestedTypes.elemType;
 
-    options.image = lib.mkOption {
-      type = lib.types.str;
-      description = "Which image should the distrobox container use";
-    };
+      options.image = lib.mkOption {
+        type = lib.types.str;
+        description = "Which image should the distrobox container use";
+      };
 
-    options.init = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Run systemd init as PID 1 inside distrobox";
-    };
+      options.init = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Run systemd init as PID 1 inside distrobox";
+      };
 
-    options.entry = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Generate desktop entry. Must be false on headless distrobox";
-    };
-  };
+      options.entry = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Generate desktop entry. Must be false on headless distrobox";
+      };
+
+      options.hostname = lib.mkOption {
+        type = lib.types.str;
+        default = name;
+        description = "distrobox host name";
+      };
+    }
+  );
 in
 {
   options.mariner.distrobox = {
