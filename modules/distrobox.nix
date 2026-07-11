@@ -68,6 +68,10 @@ in
         "docker.service"
       ];
 
+      path = [
+        config.virtualisation.docker.package
+      ];
+
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
