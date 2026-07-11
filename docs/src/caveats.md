@@ -7,20 +7,17 @@ Running `nix-collect-garbage` **inside the VM** cannot delete anything from the 
 [*whiteout*](https://www.kernel.org/doc/html/latest/filesystems/overlayfs.html#whiteouts-and-opaque-directories)
 deletions in the writable overlay.
 
-So from the VM's perspective every path in `/nix/.ro-store` can be marked deleted, while the host store stays untouched.
+So from the VM's perspective every path in `/nix/.ro-store` can be marked deleted, while the host store stays untouched. The downside of this is that you lose the shared store paths but the VM should still operate correctly.
 
-The VM's GC roots point at the running system, but its store path isn't registered as valid in VM's Nix DB, so `nix-collect-garbage` reports them as `invalid roots` and skips them:
+`nix-collect-garbage` will whiteout delete every unreferenced paths from the read-only store:
 ```shell
 [vm@nixos:~]$ nix-collect-garbage --dry-run
 finding garbage collector roots...
-skipping invalid root from "/run/booted-system" to "/nix/store/fr60nzah3ffmrvg612kw6i3harrakrrg-nixos-system-nixos-26.11.20260626.e73de5b"
-skipping invalid root from "/run/current-system" to "/nix/store/fr60nzah3ffmrvg612kw6i3harrakrrg-nixos-system-nixos-26.11.20260626.e73de5b"
 determining live/dead paths...
 123791 store paths would be deleted
 ```
-So GC deletes the running system's closure and the VM won't bookt afterwards(`systemd[1]: Unit default.target not found`).
+
+The running VM system is protected, because `/nix/var` is mounted early and its closure is registered as a valid GC root.
 
 **Recovery**:
-
-delete the writable store overlay volume image (`/var/lib/microvms/<name>/nix-store.img`) and restart the VM.
-The read-only host store shows through cleanly again. Your data/persist volumes are separate and aren't affected.
+If you ran `nix-collect-garbage` and lost access to the read-only store you can recover it by deleting the writable store overlay volume image (`/var/lib/microvms/<name>/nix-store.img`) and restarting the VM. The read-only host store will show up cleanly again. Your data/persist volumes are separate and aren't affected.

@@ -69,6 +69,7 @@ in
       device = "/nix/.rw-store/var";
       options = [ "bind" ];
       fsType = "none";
+      neededForBoot = true;
       depends = [ "/nix/.rw-store" ];
     };
   };
