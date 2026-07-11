@@ -6,4 +6,5 @@
 - [Declarative Virtual Machines](declarative-vms.md)
 - [Per-VM Customizations](./customization.md)
 - [Linux distributions userland (distrobox)](./distrobox.md)
+- [Caveats](./caveats.md)
 - [Mariner options reference](./mariner-options.md)
