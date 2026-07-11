@@ -48,6 +48,19 @@ in
       description = "Automatically enter distrobox on interactive login";
     };
 
+    replace = lib.mkOption {
+      type = lib.types.enum [
+        "onChange"
+        "never"
+        "always"
+      ];
+      default = "onChange";
+      description = ''
+        Whether to recreate boxes.
+        `always` on every boot, `never` only manually with `distrobox assemble create --replace` or `onChange` when the manifest file changes
+      '';
+    };
+
     manifest = lib.mkOption {
       type = lib.types.attrsOf distroboxManifestType;
       default = {
@@ -105,8 +118,30 @@ in
         Restart = "on-failure";
         RestartSec = "10s";
         User = config.mariner.username;
-        ExecStart = "${pkgs.distrobox}/bin/distrobox assemble create --file ${distroboxManifestFile}";
       };
+      script =
+        let
+          assemble = "${pkgs.distrobox}/bin/distrobox assemble create --file ${distroboxManifestFile}";
+        in
+        if cfg.replace == "onChange" then
+          ''
+            state="$HOME/.applied-manifest"
+            applied_manifest=$(cat "$state" 2>/dev/null || true)
+            if [ "$applied_manifest" = "${distroboxManifestFile}" ]; then
+              ${assemble}
+            else
+              ${assemble} --replace
+              echo "${distroboxManifestFile}" > "$state"
+            fi
+          ''
+        else if cfg.replace == "always" then
+          ''
+            ${assemble} --replace
+          ''
+        else
+          ''
+            ${assemble}
+          '';
     };
   };
 }
