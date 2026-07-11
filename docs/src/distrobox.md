@@ -19,6 +19,21 @@ nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
 };
 ```
 
+## Configuration
+
+The manifest options module is freeform. Besides the documented options, any key the distrobox assemble manifest supports passes through to the generated `distrobox.ini`.
+
+For more information, see [Mariner options](./mariner-options.md) and [distrobox assemble manifest](https://github.com/89luca89/distrobox/blob/1.8.2.5/docs/usage/distrobox-assemble.md) 
+
+```nix
+mariner.distrobox.manifest.alpine = {
+  image = "alpine:latest";
+  additional_packages = [ "git" "curl" ];
+  # any assemble key works too, e.g.:
+  # start_now = true;
+};
+```
+
 ## Limitations
 
 - **Networking**: The box is privileged but shares the VM's network namespace (`--network host`), so networking is the VM's responsibility, not the box's. Manage the firewall, ports, routes and DNS from the NixosConfiguration, not from inside the box.
