@@ -18,6 +18,7 @@ let
       inherit
         (
           (lib.evalModules {
+            specialArgs = { inherit pkgs; };
             modules = modules ++ [
               ({ lib, ... }: {
                 config._module.check = false; # Skip NixOS module checks
