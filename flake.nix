@@ -43,6 +43,19 @@
         ++ builtins.attrValues self.nixosModules;
       };
 
+      nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit specialArgs;
+        modules = [
+          {
+            mariner.cid = 4;
+            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
+            mariner.distrobox.enable = true;
+          }
+        ]
+        ++ builtins.attrValues self.nixosModules;
+      };
+
       packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
         modules = modules;
         sourceInfo = {
