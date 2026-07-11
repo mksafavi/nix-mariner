@@ -35,6 +35,17 @@ let
         default = name;
         description = "distrobox host name";
       };
+
+      options.additional_packages = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        example = [
+          "git"
+          "curl"
+          "vim"
+        ];
+        description = "Extra packages to install in the box";
+      };
     }
   );
 in
