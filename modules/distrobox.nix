@@ -8,15 +8,43 @@ let
   cfg = config.mariner.distrobox;
   settingsFormat = pkgs.formats.ini { listsAsDuplicateKeys = true; };
   settingsFile = settingsFormat.generate "distrobox.ini" cfg.settings;
+
+  distroboxManifestType = lib.types.submodule {
+    freeformType = settingsFormat.type.nestedTypes.elemType;
+
+    options.image = lib.mkOption {
+      type = lib.types.str;
+      description = "Which image should the distrobox container use";
+    };
+
+    options.init = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Run systemd init as PID 1 inside distrobox";
+    };
+
+    options.entry = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Generate desktop entry. Must be false on headless distrobox";
+    };
+  };
 in
 {
   options.mariner.distrobox = {
     enable = lib.mkEnableOption "distrobox integration";
 
     settings = lib.mkOption {
-      type = settingsFormat.type;
-      default = { };
-      description = "Configuration for distrobox manifest";
+      type = lib.types.attrsOf distroboxManifestType;
+      default = {
+        ubuntu = {
+          image = "ubuntu:24.04";
+        };
+      };
+      description = ''
+        Generates distrobox assemble manifest.ini, each attribute name is a `[section]` for a box.
+        Freeform Option: you may add any key that assemble manifest supports. For the full list see: [distrobox-assemble manifest reference](https://github.com/89luca89/distrobox/blob/main/docs/usage/distrobox-assemble.md).
+      '';
     };
   };
 
