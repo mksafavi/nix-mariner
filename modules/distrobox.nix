@@ -87,7 +87,7 @@ in
     };
   };
 
-  config = lib.mkIf config.mariner.distrobox.enable {
+  config = lib.mkIf cfg.enable {
 
     environment.systemPackages = with pkgs; [
       distrobox
