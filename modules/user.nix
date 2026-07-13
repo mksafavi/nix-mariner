@@ -14,6 +14,9 @@ in
     default = "vm";
     description = "VM user account";
   };
+
+  config.services.getty.autologinUser = vmUser;
+
   config.users.users.${vmUser} = {
     isNormalUser = true;
     description = vmUser;
