@@ -13,11 +13,13 @@ in
       default = 8 * 1024;
       description = "Size of the /persist volume in MiB.";
     };
+
     nixStoreSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
       description = "Size of the writable Nix store overlay in MiB.";
     };
+
     dockerSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
@@ -46,11 +48,13 @@ in
       mountPoint = "/persist";
       size = config.mariner.storage.persistSizeMiB;
     }
+
     {
       image = "nix-store.img";
       mountPoint = "/nix/.rw-store";
       size = config.mariner.storage.nixStoreSizeMiB;
     }
+
     {
       image = "docker.img";
       mountPoint = "/var/lib/docker";
@@ -65,6 +69,7 @@ in
       fsType = "none";
       depends = [ "/persist" ];
     };
+
     "/nix/var" = {
       device = "/nix/.rw-store/var";
       options = [ "bind" ];
