@@ -81,7 +81,8 @@ in
       };
       description = ''
         Generates distrobox assemble manifest.ini, each attribute name is a `[section]` for a box.
-        Freeform Option: you may add any key that assemble manifest supports. For the full list see: [distrobox-assemble manifest reference](https://github.com/89luca89/distrobox/blob/main/docs/usage/distrobox-assemble.md).
+        Freeform Option: you may add any key that assemble manifest supports.
+        For the full list see: [distrobox-assemble manifest reference](https://github.com/89luca89/distrobox/blob/1.8.2.5/docs/usage/distrobox-assemble.md).
       '';
     };
   };
