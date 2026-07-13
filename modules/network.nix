@@ -22,6 +22,8 @@
 
   config.systemd.network.enable = true;
 
+  config.networking.nftables.enable = true;
+
   config.microvm.interfaces = lib.mkDefault [
     {
       type = "tap";
