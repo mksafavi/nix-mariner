@@ -25,6 +25,12 @@ in
       default = 32 * 1024;
       description = "Size of the docker volume in MiB.";
     };
+
+    waydroidSizeMiB = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 32 * 1024;
+      description = "Size of the waydroid volume in MiB.";
+    };
   };
 
   config.services.fstrim = {
@@ -59,6 +65,12 @@ in
       image = "docker.img";
       mountPoint = "/var/lib/docker";
       size = config.mariner.storage.dockerSizeMiB;
+    }
+
+    {
+      image = "waydroid.img";
+      mountPoint = "/var/lib/waydroid";
+      size = config.mariner.storage.waydroidSizeMiB;
     }
   ];
 
