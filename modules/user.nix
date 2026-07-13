@@ -23,6 +23,7 @@ in
     extraGroups = [
       "wheel"
       "docker"
+      "video"
     ];
     shell = pkgs.bash;
     packages = with pkgs; [
