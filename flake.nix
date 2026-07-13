@@ -25,6 +25,7 @@
         nix = modules/nix.nix;
         distrobox = modules/distrobox.nix;
         waydroid = modules/waydroid.nix;
+        graphics = modules/graphics.nix;
       };
     in
     {
