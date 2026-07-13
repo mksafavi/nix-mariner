@@ -10,6 +10,18 @@ in
 {
   options.mariner.waydroid = {
     enable = lib.mkEnableOption "waydroid integration";
+
+    systemImage = lib.mkOption {
+      type = lib.types.enum [
+        "VANILLA"
+        "GAPPS"
+        "FOSS"
+      ];
+      default = "VANILLA";
+      description = ''
+        Set Android system image variant
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -33,7 +45,7 @@ in
         RestartSec = "10s";
       };
       script = ''
-        ${pkgs.waydroid}/bin/waydroid init
+        ${pkgs.waydroid}/bin/waydroid init -s ${cfg.systemImage}
       '';
     };
   };
