@@ -60,18 +60,13 @@ in
         "waydroid-init.service"
         "waydroid-container.service"
       ];
-      path = [
-        pkgs.dbus
-      ];
       serviceConfig = {
         Restart = "always";
         RestartSec = "10s";
         User = config.mariner.username;
-        RuntimeDirectory = "waydroid-session";
-        RuntimeDirectoryMode = "0700";
       };
       environment = {
-        XDG_RUNTIME_DIR = "/run/waydroid-session";
+        XDG_RUNTIME_DIR = "/run/user/${lib.toString config.users.users.${config.mariner.username}.uid}";
       };
       preStart = ''
         # Hack to ignore missing PulseAudio
@@ -79,7 +74,6 @@ in
         ln -sf /dev/null $XDG_RUNTIME_DIR/pulse/native
       '';
       script = ''
-        ${pkgs.dbus}/bin/dbus-run-session \
         ${pkgs.waypipe}/bin/waypipe --vsock -s 2:6000 server \
         ${pkgs.waydroid}/bin/waydroid session start
       '';
