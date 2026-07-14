@@ -73,6 +73,11 @@ in
       environment = {
         XDG_RUNTIME_DIR = "/run/waydroid-session";
       };
+      preStart = ''
+        # Hack to ignore missing PulseAudio
+        mkdir -p $XDG_RUNTIME_DIR/pulse
+        ln -sf /dev/null $XDG_RUNTIME_DIR/pulse/native
+      '';
       script = ''
         ${pkgs.dbus}/bin/dbus-run-session \
         ${pkgs.waypipe}/bin/waypipe --vsock -s 2:6000 server \
