@@ -20,6 +20,7 @@ in
   config.users.users.${vmUser} = {
     isNormalUser = true;
     description = vmUser;
+    uid = 1000;
     extraGroups = [
       "wheel"
       "docker"
