@@ -21,6 +21,7 @@ in
     isNormalUser = true;
     description = vmUser;
     uid = 1000;
+    linger = true;
     extraGroups = [
       "wheel"
       "docker"
