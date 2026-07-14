@@ -67,6 +67,11 @@ in
         Restart = "always";
         RestartSec = "10s";
         User = config.mariner.username;
+        RuntimeDirectory = "waydroid-session";
+        RuntimeDirectoryMode = "0700";
+      };
+      environment = {
+        XDG_RUNTIME_DIR = "/run/waydroid-session";
       };
       script = ''
         ${pkgs.dbus}/bin/dbus-run-session \
