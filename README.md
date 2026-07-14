@@ -30,8 +30,7 @@ See [`examples/flake.nix`](examples/flake.nix) for a standalone imperative flake
 Full documentation is available at https://mksafavi.github.io/nix-mariner/
 
 ## License
-This project is licensed under the Apache License 2.0. See the LICENSE file for details.
-
+This project is licensed under the Apache License 2.0. See the [`LICENSE`](LICENSE) file for details.
 
 ## <!-- breaker -->
 
