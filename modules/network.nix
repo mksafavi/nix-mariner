@@ -20,25 +20,26 @@
     description = "MAC address for the LAN interface.";
   };
 
-  config.systemd.network.enable = true;
+  config = {
+    systemd.network.enable = true;
 
-  config.networking.nftables.enable = true;
+    networking.nftables.enable = true;
 
-  config.microvm.interfaces = lib.mkDefault [
-    {
-      type = "tap";
-      id = "microvm-${toString config.mariner.cid}";
-      mac = config.mariner.network.mac;
-    }
-  ];
+    microvm.interfaces = lib.mkDefault [
+      {
+        type = "tap";
+        id = "microvm-${toString config.mariner.cid}";
+        mac = config.mariner.network.mac;
+      }
+    ];
 
-  config.systemd.network.networks."10-lan" = lib.mkDefault {
-    matchConfig.MACAddress = config.mariner.network.mac;
-    networkConfig = {
-      Address = [ config.mariner.network.address ];
-      Gateway = "10.0.0.1";
-      DNS = [ "10.0.0.1" ];
+    systemd.network.networks."10-lan" = lib.mkDefault {
+      matchConfig.MACAddress = config.mariner.network.mac;
+      networkConfig = {
+        Address = [ config.mariner.network.address ];
+        Gateway = "10.0.0.1";
+        DNS = [ "10.0.0.1" ];
+      };
     };
   };
-
 }
