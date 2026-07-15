@@ -24,6 +24,12 @@
             microvm.nixosModules.microvm
           ];
         };
+        host = {
+          imports = [
+            ./modules/host.nix
+            microvm.nixosModules.host
+          ];
+        };
       };
 
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
