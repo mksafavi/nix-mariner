@@ -61,11 +61,11 @@ in
       size = config.mariner.storage.nixStoreSizeMiB;
     }
 
-    {
+    (lib.mkIf config.mariner.docker.enable {
       image = "docker.img";
       mountPoint = "/var/lib/docker";
       size = config.mariner.storage.dockerSizeMiB;
-    }
+    })
 
     {
       image = "waydroid.img";
