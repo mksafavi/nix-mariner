@@ -89,6 +89,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    mariner.docker.enable = lib.mkDefault true;
+
     environment.systemPackages = with pkgs; [
       distrobox
     ];
