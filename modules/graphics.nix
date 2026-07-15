@@ -12,7 +12,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     hardware.graphics.enable = true;
 
     microvm.graphics = {

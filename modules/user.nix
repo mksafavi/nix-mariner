@@ -16,7 +16,6 @@ in
   };
 
   config = {
-
     services.getty.autologinUser = vmUser;
 
     users.users.${vmUser} = {

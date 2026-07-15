@@ -25,7 +25,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     virtualisation.waydroid.enable = true;
 
     mariner.graphics.enable = lib.mkDefault true;
