@@ -33,69 +33,72 @@ in
     };
   };
 
-  config.services.fstrim = {
-    enable = true;
-    interval = "weekly";
-  };
+  config = {
 
-  config.microvm.writableStoreOverlay = "/nix/.rw-store";
-
-  config.microvm.shares = [
-    {
-      tag = "ro-store";
-      source = "/nix/store";
-      mountPoint = "/nix/.ro-store";
-    }
-  ];
-
-  config.microvm.volumes = [
-    {
-      image = "persist.img";
-      mountPoint = "/persist";
-      size = config.mariner.storage.persistSizeMiB;
-    }
-
-    {
-      image = "nix-store.img";
-      mountPoint = "/nix/.rw-store";
-      size = config.mariner.storage.nixStoreSizeMiB;
-    }
-
-    (lib.mkIf config.mariner.docker.enable {
-      image = "docker.img";
-      mountPoint = "/var/lib/docker";
-      size = config.mariner.storage.dockerSizeMiB;
-    })
-
-    (lib.mkIf config.mariner.waydroid.enable {
-      image = "waydroid.img";
-      mountPoint = "/var/lib/waydroid";
-      size = config.mariner.storage.waydroidSizeMiB;
-    })
-  ];
-
-  config.fileSystems = {
-    "/home" = {
-      device = "/persist/home";
-      options = [ "bind" ];
-      fsType = "none";
-      depends = [ "/persist" ];
+    services.fstrim = {
+      enable = true;
+      interval = "weekly";
     };
 
-    "/nix/var" = {
-      device = "/nix/.rw-store/var";
-      options = [ "bind" ];
-      fsType = "none";
-      neededForBoot = true;
-      depends = [ "/nix/.rw-store" ];
-    };
-  };
+    microvm.writableStoreOverlay = "/nix/.rw-store";
 
-  config.systemd.tmpfiles.rules = [
-    "d /persist/home 0755 root root -"
-    "d /persist/home/${vmUser} 0700 ${vmUser} users -"
-    "d /nix-store/var 0755 root root -"
-    "d /persist/ssh 0755 root root -"
-  ];
+    microvm.shares = [
+      {
+        tag = "ro-store";
+        source = "/nix/store";
+        mountPoint = "/nix/.ro-store";
+      }
+    ];
+
+    microvm.volumes = [
+      {
+        image = "persist.img";
+        mountPoint = "/persist";
+        size = config.mariner.storage.persistSizeMiB;
+      }
+
+      {
+        image = "nix-store.img";
+        mountPoint = "/nix/.rw-store";
+        size = config.mariner.storage.nixStoreSizeMiB;
+      }
+
+      (lib.mkIf config.mariner.docker.enable {
+        image = "docker.img";
+        mountPoint = "/var/lib/docker";
+        size = config.mariner.storage.dockerSizeMiB;
+      })
+
+      (lib.mkIf config.mariner.waydroid.enable {
+        image = "waydroid.img";
+        mountPoint = "/var/lib/waydroid";
+        size = config.mariner.storage.waydroidSizeMiB;
+      })
+    ];
+
+    fileSystems = {
+      "/home" = {
+        device = "/persist/home";
+        options = [ "bind" ];
+        fsType = "none";
+        depends = [ "/persist" ];
+      };
+
+      "/nix/var" = {
+        device = "/nix/.rw-store/var";
+        options = [ "bind" ];
+        fsType = "none";
+        neededForBoot = true;
+        depends = [ "/nix/.rw-store" ];
+      };
+    };
+
+    systemd.tmpfiles.rules = [
+      "d /persist/home 0755 root root -"
+      "d /persist/home/${vmUser} 0700 ${vmUser} users -"
+      "d /nix-store/var 0755 root root -"
+      "d /persist/ssh 0755 root root -"
+    ];
+  };
 
 }
