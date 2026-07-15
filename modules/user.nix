@@ -15,23 +15,26 @@ in
     description = "VM user account";
   };
 
-  config.services.getty.autologinUser = vmUser;
+  config = {
 
-  config.users.users.${vmUser} = {
-    isNormalUser = true;
-    description = vmUser;
-    uid = 1000;
-    linger = true;
-    extraGroups = [
-      "wheel"
-      "docker"
-      "video"
-    ];
-    shell = pkgs.bash;
-    packages = with pkgs; [
-      git
-      lf
-      vim
-    ];
+    services.getty.autologinUser = vmUser;
+
+    users.users.${vmUser} = {
+      isNormalUser = true;
+      description = vmUser;
+      uid = 1000;
+      linger = true;
+      extraGroups = [
+        "wheel"
+        "docker"
+        "video"
+      ];
+      shell = pkgs.bash;
+      packages = with pkgs; [
+        git
+        lf
+        vim
+      ];
+    };
   };
 }
