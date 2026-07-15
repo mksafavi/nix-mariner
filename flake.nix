@@ -58,6 +58,20 @@
         ++ builtins.attrValues self.nixosModules;
       };
 
+      nixosConfigurations.android = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit specialArgs;
+        modules = [
+          {
+            mariner.cid = 5;
+            mariner.waydroid.enable = true;
+            mariner.waydroid.systemImage = "GAPPS";
+            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
+          }
+        ]
+        ++ builtins.attrValues self.nixosModules;
+      };
+
       packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
         modules = modules;
         sourceInfo = {
