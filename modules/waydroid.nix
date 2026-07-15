@@ -28,6 +28,8 @@ in
 
     virtualisation.waydroid.enable = true;
 
+    mariner.graphics.enable = lib.mkDefault true;
+
     systemd.services.waydroid-init = {
       description = "initialize waydroid";
       wantedBy = [ "multi-user.target" ];
