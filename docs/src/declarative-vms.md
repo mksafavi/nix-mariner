@@ -32,7 +32,7 @@ Create a `virtualization.nix` module and import it into your host setup:
           imports = builtins.attrValues mariner.nixosModules ++ [ ];
           mariner.cid = 4;
           mariner.username = "work";
-          mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host";
+          mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
         };
     };
 
@@ -44,7 +44,7 @@ Create a `virtualization.nix` module and import it into your host setup:
           imports = builtins.attrValues mariner.nixosModules ++ [ ];
           mariner.cid = 5;
           mariner.username = "user";
-          mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host";
+          mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
         };
     };
   };

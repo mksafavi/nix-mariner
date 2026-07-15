@@ -39,7 +39,7 @@
           self.nixosModules.default
           {
             mariner.cid = 3;
-            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
+            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
           }
         ];
       };
@@ -51,7 +51,7 @@
           self.nixosModules.default
           {
             mariner.cid = 4;
-            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
+            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
             mariner.distrobox.enable = true;
           }
         ];
@@ -66,7 +66,7 @@
             mariner.cid = 5;
             mariner.waydroid.enable = true;
             mariner.waydroid.systemImage = "GAPPS";
-            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
+            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
           }
         ];
       };

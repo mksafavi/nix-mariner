@@ -22,7 +22,7 @@
               mariner = {
                 cid = 11;
                 # Your host public ssh key:
-                hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
+                ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
                 username = "example";
               };
 

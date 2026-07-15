@@ -26,7 +26,7 @@ The following `flake.nix` creates a VM named `example`:
         modules = builtins.attrValues mariner.nixosModules ++ [
           {
             mariner.cid = 4; # Unique per-VM CID that sets vsock number and IP address.
-            mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host"; # Replace with your ssh public key
+            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host"; # Replace with your ssh public key
           }
         ];
       };

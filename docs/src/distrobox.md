@@ -12,7 +12,7 @@ nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
     {
       mariner.distrobox.enable = true;
       mariner.cid = 6;
-      mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host";
+      mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
     }
   ]
   ++ builtins.attrValues mariner.nixosModules;

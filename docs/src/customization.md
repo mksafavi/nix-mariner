@@ -15,7 +15,7 @@ For more information, see [Mariner options](./mariner-options.md) and [microvm.n
           mariner.cid = 5;
           # Change user name:
           mariner.username = "user";
-          mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... your@host";
+          mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
           # Set VM resources:
           microvm = {
             vcpu = 4;
