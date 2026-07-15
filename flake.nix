@@ -15,66 +15,58 @@
       specialArgs = {
         inherit nixpkgs;
       };
-      modules = {
-        common = modules/common.nix;
-        vm = modules/vm.nix;
-        storage = modules/storage.nix;
-        network = modules/network.nix;
-        user = modules/user.nix;
-        ssh = modules/ssh.nix;
-        nix = modules/nix.nix;
-        distrobox = modules/distrobox.nix;
-        waydroid = modules/waydroid.nix;
-        graphics = modules/graphics.nix;
-        docker = modules/docker.nix;
-      };
     in
     {
-      nixosModules = modules // {
-        microvm = microvm.nixosModules.microvm;
+      nixosModules = {
+        default = {
+          imports = [
+            ./modules
+            microvm.nixosModules.microvm
+          ];
+        };
       };
 
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
         inherit system;
         inherit specialArgs;
         modules = [
+          self.nixosModules.default
           {
             mariner.cid = 3;
             mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
           }
-        ]
-        ++ builtins.attrValues self.nixosModules;
+        ];
       };
 
       nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
         inherit system;
         inherit specialArgs;
         modules = [
+          self.nixosModules.default
           {
             mariner.cid = 4;
             mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
             mariner.distrobox.enable = true;
           }
-        ]
-        ++ builtins.attrValues self.nixosModules;
+        ];
       };
 
       nixosConfigurations.android = nixpkgs.lib.nixosSystem {
         inherit system;
         inherit specialArgs;
         modules = [
+          self.nixosModules.default
           {
             mariner.cid = 5;
             mariner.waydroid.enable = true;
             mariner.waydroid.systemImage = "GAPPS";
             mariner.hostAuthorizedKey = "ssh-ed25519 AAAA... user@host";
           }
-        ]
-        ++ builtins.attrValues self.nixosModules;
+        ];
       };
 
       packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
-        modules = modules;
+        modules = self.nixosModules;
         sourceInfo = {
           repo = "https://github.com/mksafavi/nix-mariner";
           rev = self.rev or null;
