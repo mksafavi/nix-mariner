@@ -1,5 +1,8 @@
-{ config, lib, ... }:
-
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.mariner.graphics;
 in
