@@ -67,11 +67,11 @@ in
       size = config.mariner.storage.dockerSizeMiB;
     })
 
-    {
+    (lib.mkIf config.mariner.waydroid.enable {
       image = "waydroid.img";
       mountPoint = "/var/lib/waydroid";
       size = config.mariner.storage.waydroidSizeMiB;
-    }
+    })
   ];
 
   config.fileSystems = {
