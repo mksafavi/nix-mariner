@@ -72,7 +72,6 @@
       };
 
       packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
-        modules = self.nixosModules;
         sourceInfo = {
           repo = "https://github.com/mksafavi/nix-mariner";
           rev = self.rev or null;

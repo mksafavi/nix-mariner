@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  modules,
   sourceInfo,
   ...
 }:
@@ -53,7 +52,8 @@ let
         };
     };
 
-  optionDocs = makeOptionsDoc (builtins.attrValues modules);
+  modulesOptionsDocs = makeOptionsDoc ([ ../modules ]);
+  hostOptionsDocs = makeOptionsDoc ([ ../modules/host.nix ]);
 in
 pkgs.runCommand "nix-mariner-docs"
   {
@@ -62,6 +62,7 @@ pkgs.runCommand "nix-mariner-docs"
   ''
     cp -Lr ${../docs} docs
     chmod u+w docs/src
-    cp ${optionDocs.optionsCommonMark} docs/src/mariner-options.md
+    cp ${modulesOptionsDocs.optionsCommonMark} docs/src/mariner-options.md
+    cp ${hostOptionsDocs.optionsCommonMark} docs/src/mariner-host-options.md
     mdbook build -d $out docs
   ''
