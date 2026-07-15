@@ -33,7 +33,7 @@
   ];
 
   config.systemd.network.networks."10-lan" = lib.mkDefault {
-    matchConfig.Type = "ether";
+    matchConfig.MACAddress = config.mariner.mac;
     networkConfig = {
       Address = [ config.mariner.address ];
       Gateway = "10.0.0.1";
