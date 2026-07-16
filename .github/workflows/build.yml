@@ -37,4 +37,4 @@ jobs:
         with:
           devShell: .#devShells.x86_64-linux.default
       - run: |
-          nix-fast-build
+          nix-fast-build --skip-cached --no-nom
