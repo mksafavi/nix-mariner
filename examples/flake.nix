@@ -9,7 +9,7 @@
       nixosConfigurations.example = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit nixpkgs; };
-        modules = builtins.attrValues mariner.nixosModules ++ [
+        modules = [
           (
             {
               config,
@@ -19,6 +19,7 @@
             }:
             {
               # nix-mariner Options:
+              imports = [ mariner.nixosModules.default ];
               mariner = {
                 cid = 11;
                 # Your host public ssh key:

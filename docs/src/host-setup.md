@@ -1,6 +1,6 @@
 # Host setup
 
-In order to use nix-mariner, you need to import `microvm.nixosModules.host` module and configure the networking options in your nixos system configuration.
+In order to use nix-mariner, you need to import `mariner.nixosModules.host` module and configure the networking options in your nixos system configuration.
 
 You can use the `microvm` cli tool to create and manage VMs imperatively, instead of declaring them in your NixOS config.
 
@@ -22,8 +22,7 @@ See [`Preparing a NixOS host for declarative MicroVMs`](https://microvm-nix.gith
     nixosConfigurations.machine = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        # Include the microvm host module
-        mariner.inputs.microvm.nixosModules.host
+        mariner.nixosModules.host # Also imports the microvm host module
       ];
     };
   };
@@ -49,8 +48,7 @@ Alternatively, you could declare microvm directly in your inputs:
     nixosConfigurations.machine = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        # Include the microvm host module
-        microvm.nixosModules.host
+        mariner.nixosModules.host # also imports the microvm host module
       ];
     };
   };

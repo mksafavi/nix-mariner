@@ -11,7 +11,8 @@ For more information, see [Mariner options](./mariner-options.md) and [microvm.n
       config =
         { config, pkgs, ... }: # this points to the vm config to access config.mariner
         {
-          imports = builtins.attrValues mariner.nixosModules ++ [ ];
+          imports = [ mariner.nixosModules.default ];
+
           mariner.cid = 5;
           # Change user name:
           mariner.username = "user";

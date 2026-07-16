@@ -23,8 +23,9 @@ The following `flake.nix` creates a VM named `example`:
       nixosConfigurations.example = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit nixpkgs; };
-        modules = builtins.attrValues mariner.nixosModules ++ [
+        modules = [
           {
+            imports = [ mariner.nixosModules.default ];
             mariner.cid = 4; # Unique per-VM CID that sets vsock number and IP address.
             mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host"; # Replace with your ssh public key
           }
