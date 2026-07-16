@@ -41,7 +41,7 @@ waypipe --vsock -s 6000 client
 And then:
 
 ```shell
-ssh vm@vsock%3 waydroid show-full-ui
+ssh vm@<addr> waydroid show-full-ui
 ```
 
 ## Network access on first boot
