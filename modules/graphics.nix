@@ -16,6 +16,7 @@ in
 
     microvm.graphics = {
       enable = true;
+      backend = lib.mkDefault "headless";
     };
   };
 }
