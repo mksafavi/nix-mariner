@@ -15,6 +15,8 @@ jobs:
           devShell: .#devShells.x86_64-linux.default
       - run: |
           treefmt --ci
+      - run: |
+          deadnix --fail
 
   check:
     runs-on: ubuntu-24.04
