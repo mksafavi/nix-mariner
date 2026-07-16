@@ -11,19 +11,31 @@ Built on [microvm.nix](https://github.com/microvm-nix/microvm.nix).
 
 - Provides NixOS modules importable as a flake input.
 - Creates persistent microVM environments for isolating untrusted code away from the host.
-- Preconfigured: SSH, Docker, direnv, shared `/nix/store`, persistent storage, bridge networking, etc.
+- Preconfigured with SSH, Docker, direnv, shared `/nix/store`, persistent storage, bridge networking.
+- Optional userlands inside the VM:
+  - Ubuntu via [distrobox](docs/src/distrobox.md), SSH logins directly into Ubuntu.
+  - Android via [Waydroid](docs/src/waydroid.md), opens a window on your host desktop.
 
 ## Quick start
 
-First, complete the one-time [host setup](docs/src/host-setup.md).
+First, complete the one-time [host setup](docs/src/host-setup.md) to import `inputs.mariner.nixosModules.host` and configure the network bridge, DNS, and firewall settings that microvm.nix expects.
 
-This configures the network bridge, DNS, and firewall settings that microvm.nix expects.
+Then choose a workflow for creating virtual machines. Create VMs [Imperatively](docs/src/imperative-vms.md) or [Declaratively](docs/src/declarative-vms.md). To use nix-mariner as a flake input:
 
-Then choose a workflow for creating virtual machines:
-- [Imperative Virtual Machines](docs/src/imperative-vms.md)
-- [Declarative Virtual Machines](docs/src/declarative-vms.md)
+```nix
+{
+  imports = [ inputs.mariner.nixosModules.default ];
+  mariner = {
+    cid = 3;
+    ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
+  };
+}
+```
 
-See [`examples/flake.nix`](examples/flake.nix) for a standalone imperative flake example.
+## Questions & Support
+
+- Feel free to start a discussion on [Discussions](https://github.com/mksafavi/nix-mariner/discussions)
+- Report bugs and feature requests at [Issues](https://github.com/mksafavi/nix-mariner/issues)
 
 ## Documentation
 
