@@ -6,6 +6,7 @@
 - [Declarative Virtual Machines](declarative-vms.md)
 - [Per-VM Customizations](./customization.md)
 - [Linux distributions userland (distrobox)](./distrobox.md)
+- [Android emulation (Waydroid)](./waydroid.md)
 - [Caveats](./caveats.md)
 - [Mariner options reference](./mariner-options.md)
 - [Mariner host options reference](./mariner-host-options.md)
