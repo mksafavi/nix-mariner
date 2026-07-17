@@ -73,17 +73,15 @@
         };
       };
 
-      devShells.${system}.default =
-        with import nixpkgs { inherit system; };
-        mkShell {
-          buildInputs = [
-            nixfmt
-            nixfmt-tree
-            nix-fast-build
-            mdbook
-            deadnix
-          ];
-        };
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          nixfmt
+          nixfmt-tree
+          nix-fast-build
+          mdbook
+          deadnix
+        ];
+      };
 
       checks.${system} =
         let
