@@ -1,14 +1,7 @@
-{
-  nixpkgs,
-  ...
-}:
+{ ... }:
 {
   nix = {
     enable = true;
-    registry.nixpkgs.flake = nixpkgs;
-    nixPath = [
-      "nixpkgs=flake:${nixpkgs}"
-    ];
     settings = {
       experimental-features = [
         "nix-command"

@@ -12,9 +12,6 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-      specialArgs = {
-        inherit nixpkgs;
-      };
     in
     {
       nixosModules = {
@@ -34,7 +31,6 @@
 
       nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
         inherit system;
-        inherit specialArgs;
         modules = [
           self.nixosModules.default
           {
@@ -46,7 +42,6 @@
 
       nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
         inherit system;
-        inherit specialArgs;
         modules = [
           self.nixosModules.default
           {
@@ -59,7 +54,6 @@
 
       nixosConfigurations.android = nixpkgs.lib.nixosSystem {
         inherit system;
-        inherit specialArgs;
         modules = [
           self.nixosModules.default
           {
