@@ -1,7 +1,7 @@
 {
   inputs.mariner.url = "github:mksafavi/nix-mariner";
   outputs =
-    { self, mariner }:
+    { mariner }:
     let
       nixpkgs = mariner.inputs.nixpkgs;
     in
@@ -11,12 +11,7 @@
         specialArgs = { inherit nixpkgs; };
         modules = [
           (
-            {
-              config,
-              pkgs,
-              lib,
-              ...
-            }:
+            { config, pkgs, ... }:
             {
               # nix-mariner Options:
               imports = [ mariner.nixosModules.default ];
