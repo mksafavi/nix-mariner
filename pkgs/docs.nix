@@ -66,5 +66,6 @@ pkgs.runCommand "nix-mariner-docs"
     chmod u+w docs/src
     cp ${modulesOptionsDoc.optionsCommonMark} docs/src/mariner-options.md
     cp ${hostOptionsDoc.optionsCommonMark} docs/src/mariner-host-options.md
-    mdbook build -d $out docs
+    mdbook build -d $out docs 2>&1 | tee build.log
+    if grep -qF ERROR build.log; then exit 1; fi
   ''
