@@ -21,6 +21,15 @@ in
       description = "Host static IPv4 address on the bridge.";
     };
 
+    dns = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = ''
+        DNS Address defaults to FallbackDNS.
+        You should set it to network.gateway if host.network.exposeDNS is enabled.
+      '';
+    };
+
     mac = lib.mkOption {
       type = lib.types.str;
       default = "02:00:00:00:00:${
@@ -49,7 +58,7 @@ in
       networkConfig = {
         Address = [ cfg.address ];
         Gateway = cfg.gateway;
-        DNS = [ cfg.gateway ];
+        DNS = lib.mkIf (cfg.dns != null) [ cfg.dns ];
       };
     };
   };

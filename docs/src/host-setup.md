@@ -59,7 +59,13 @@ Alternatively, you could declare microvm directly in your inputs:
 
 Importing `mariner.host` enables the `microvm.host` and defaults to on.
 `mariner.host.graphics` option runs a `waypipe` client in the host Wayland session so VM windows render on host's Wayland compositor.
-`mariner.host.network` sets up a bridge that each VM tap connects to on their own `10.0.0.0/24` subnet and allows VMs to access DNS from the host.
+`mariner.host.network` sets up a bridge that each VM tap connects to on their own `10.0.0.0/24` subnet.
+
+The VMs resolve DNS by `systemd-resolved` service.
+If you want to allow the VMs to access DNS from the host machine,
+enable `mariner.host.network.exposeDNS` and set the VM `mariner.network.dns` option to the bridge gateway address.
+Enabling `exposeDNS` opens port `53` on the firewall.
+
 The network options are a default, that might not match your network configurations. Keep it disabled and configure it yourself if it doesn't fit.
 
 See [`A simple network setup`](https://microvm-nix.github.io/microvm.nix/simple-network.html) for more information.
