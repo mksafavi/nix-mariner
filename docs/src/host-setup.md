@@ -8,51 +8,14 @@ See [`Preparing a NixOS host for declarative MicroVMs`](https://microvm-nix.gith
 
 ## NixOS microvm.nix module
 
+Add mariner to your host NixOS flake inputs:
 ```nix
-# Host server flake.nix
-{
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    mariner.url = "github:mksafavi/nix-mariner";
-    mariner.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  outputs = { self, nixpkgs, mariner }: {
-    nixosConfigurations.machine = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        mariner.nixosModules.host # Also imports the microvm host module
-      ];
-    };
-  };
-}
+{{#include ../../examples/host_flake_inputs.nix}}
 ```
 
 Alternatively, you could declare microvm directly in your inputs:
 ```nix
-# Host server flake.nix
-{
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    microvm.url = "github:microvm-nix/microvm.nix";
-    microvm.inputs.nixpkgs.follows = "nixpkgs";
-
-    mariner.url = "github:mksafavi/nix-mariner";
-    mariner.inputs.microvm.follows = "microvm";
-    mariner.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  outputs = { self, nixpkgs, mariner, microvm }: {
-    nixosConfigurations.machine = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        mariner.nixosModules.host # also imports the microvm host module
-      ];
-    };
-  };
-}
+{{#include ../../examples/host_flake_following_inputs.nix}}
 ```
 
 ## Mariner host module additions
@@ -71,14 +34,7 @@ The network options are a default, that might not match your network configurati
 See [`A simple network setup`](https://microvm-nix.github.io/microvm.nix/simple-network.html) for more information.
 
 ```nix
-{ ... }:
-{
-  mariner = {
-    host.enable = true;
-    host.network.enable = true;
-    host.graphics.enable = true;
-  };
-}
+{{#include ../../examples/host.nix:host-module}}
 ```
 
 ## Verify
