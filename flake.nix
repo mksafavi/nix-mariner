@@ -29,63 +29,7 @@
         };
       };
 
-      nixosConfigurations.host = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          self.nixosModules.host
-          {
-            mariner.host = {
-              enable = true;
-              graphics.enable = true;
-              network.enable = true;
-              network.exposeDNS = true;
-            };
-
-            # Stubbing a host system...
-            networking.useDHCP = false;
-            fileSystems."/".device = "/dev/disk/by-label/nixos";
-            fileSystems."/".fsType = "ext4";
-            boot.loader.grub.enable = false;
-            system.stateVersion = "25.05";
-          }
-        ];
-      };
-
-      nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          self.nixosModules.default
-          {
-            mariner.cid = 3;
-            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
-          }
-        ];
-      };
-
-      nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          self.nixosModules.default
-          {
-            mariner.cid = 4;
-            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
-            mariner.distrobox.enable = true;
-          }
-        ];
-      };
-
-      nixosConfigurations.android = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          self.nixosModules.default
-          {
-            mariner.cid = 5;
-            mariner.waydroid.enable = true;
-            mariner.waydroid.systemImage = "GAPPS";
-            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
-          }
-        ];
-      };
+      nixosConfigurations = import ./examples { inherit self nixpkgs system; };
 
       packages.${system}.docs = pkgs.callPackage ./pkgs/docs.nix {
         sourceInfo = {
