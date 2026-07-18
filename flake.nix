@@ -108,7 +108,11 @@
       checks.${system} =
         let
           systemsAttrs = nixpkgs.lib.mapAttrs' (
-            n: c: nixpkgs.lib.nameValuePair "microvm-${n}" c.config.microvm.runner.qemu
+            n: c:
+            if c.config.microvm ? runner then
+              nixpkgs.lib.nameValuePair "microvm-${n}" c.config.microvm.runner.qemu
+            else
+              nixpkgs.lib.nameValuePair "host-${n}" c.config.system.build.toplevel
           ) self.nixosConfigurations;
           devShellsAttrs = nixpkgs.lib.mapAttrs' (
             n: nixpkgs.lib.nameValuePair "devShell-${n}"
