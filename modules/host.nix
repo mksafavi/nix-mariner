@@ -36,6 +36,7 @@ in
     lib.mkMerge [
       {
         microvm.host.enable = true;
+        boot.kernelModules = [ "vhost_vsock" ];
       }
       (lib.mkIf cfg.graphics.enable {
         systemd.user.services.mariner-waypipe-client = {
