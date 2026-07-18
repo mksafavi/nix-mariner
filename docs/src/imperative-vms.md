@@ -62,5 +62,3 @@ ssh vm@vsock%4
 # or:
 ssh vm@10.0.0.4
 ```
-
-See [`examples/flake.nix`](https://github.com/mksafavi/nix-mariner/blob/main/examples/flake.nix) for a standalone flake example.
