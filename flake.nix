@@ -34,7 +34,10 @@
         modules = [
           self.nixosModules.host
           {
-            mariner.host.enable = true;
+            mariner.host = {
+              enable = true;
+              graphics.enable = true;
+            };
 
             # Stubbing a host system...
             networking.useDHCP = false;
