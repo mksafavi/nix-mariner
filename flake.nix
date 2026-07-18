@@ -37,6 +37,7 @@
             mariner.host = {
               enable = true;
               graphics.enable = true;
+              network.enable = true;
             };
 
             # Stubbing a host system...
