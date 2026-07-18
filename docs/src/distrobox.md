@@ -5,18 +5,7 @@ You can run other Linux distributions' userland inside the NixOS microVM, on the
 Setting `mariner.distrobox.enable = true;` sets up ubuntu:24.04 with `autoEnter` configured:
 
 ```nix
-nixosConfigurations.ubuntu = nixpkgs.lib.nixosSystem {
-  inherit system;
-  inherit specialArgs;
-  modules = [
-    {
-      imports = [ mariner.nixosModules.default ];
-      mariner.distrobox.enable = true;
-      mariner.cid = 6;
-      mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
-    }
-  ];
-};
+{{#include ../../examples/ubuntu.nix}}
 ```
 
 ## Configuration
@@ -26,12 +15,7 @@ The manifest options module is freeform. Besides the documented options, any key
 For more information, see [Mariner options](./mariner-options.md) and [distrobox assemble manifest](https://github.com/89luca89/distrobox/blob/1.8.2.5/docs/usage/distrobox-assemble.md) 
 
 ```nix
-mariner.distrobox.manifest.alpine = {
-  image = "alpine:latest";
-  additional_packages = [ "git" "curl" ];
-  # any assemble key works too, e.g.:
-  # start_now = true;
-};
+{{#include ../../examples/distrobox_manifest.nix}}
 ```
 
 ## Limitations
