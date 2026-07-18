@@ -38,6 +38,7 @@
               enable = true;
               graphics.enable = true;
               network.enable = true;
+              network.exposeDNS = true;
             };
 
             # Stubbing a host system...

@@ -24,6 +24,8 @@ in
     network = {
       enable = lib.mkEnableOption "nix-mariner host network options";
 
+      exposeDNS = lib.mkEnableOption "host DNS on the microvm bridge (requires Resolved service) and allow VMs to reach it";
+
       address = lib.mkOption {
         type = lib.types.str;
         default = "10.0.0.1";
@@ -60,16 +62,19 @@ in
         # microvm requires systemd networkd. You can use it alongside NetworkManager without any issues.
         systemd.network.enable = lib.mkDefault true;
 
-        # DNS on microvm bridge. This assumes you're already using systemd-resolved.
-        services.resolved.settings.Resolve = lib.mkDefault {
-          DNSStubListenerExtra = [ cfg.network.address ];
-        };
+        # DNS on microvm bridge and allow VMs to reach it. This assumes you're already using systemd-resolved.
+        services.resolved.settings.Resolve = lib.mkIf cfg.network.exposeDNS (
+          lib.mkDefault {
+            DNSStubListenerExtra = [ cfg.network.address ];
+          }
+        );
+        networking.firewall.interfaces."br-microvm" = lib.mkIf cfg.network.exposeDNS ({
+          allowedUDPPorts = lib.mkDefault [ 53 ];
+          allowedTCPPorts = lib.mkDefault [ 53 ];
+        });
 
         # NetworkManager shouldn't manage the microvm bridge.
         networking.networkmanager.unmanaged = lib.mkDefault [ "br-microvm" ];
-
-        # Allow VMs to reach the dns on the host
-        networking.firewall.interfaces."br-microvm".allowedUDPPorts = lib.mkDefault [ 53 ];
 
         systemd.network.netdevs."br-microvm" = lib.mkDefault {
           netdevConfig = {
