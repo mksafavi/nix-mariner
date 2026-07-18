@@ -5,10 +5,7 @@ Enabling Waydroid enables graphics support it needs for rendering the Android UI
 
 
 ```nix
-{
-  mariner.waydroid.enable = true;
-  mariner.waydroid.systemImage = "GAPPS";
-}
+{{#include ../../examples/android.nix}}
 ```
 
 ## Viewing Android UI
