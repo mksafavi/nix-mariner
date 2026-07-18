@@ -57,14 +57,18 @@ in
 
         boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
+        # microvm requires systemd networkd. You can use it alongside NetworkManager without any issues.
         systemd.network.enable = lib.mkDefault true;
 
+        # DNS on microvm bridge. This assumes you're already using systemd-resolved.
         services.resolved.settings.Resolve = lib.mkDefault {
           DNSStubListenerExtra = [ cfg.network.address ];
         };
 
+        # NetworkManager shouldn't manage the microvm bridge.
         networking.networkmanager.unmanaged = lib.mkDefault [ "br-microvm" ];
 
+        # Allow VMs to reach the dns on the host
         networking.firewall.interfaces."br-microvm".allowedUDPPorts = lib.mkDefault [ 53 ];
 
         systemd.network.netdevs."br-microvm" = lib.mkDefault {
@@ -83,6 +87,7 @@ in
           };
         };
 
+        # Attach VM TAPs to the bridge automatically
         systemd.network.networks."10-microvm-tap" = lib.mkDefault {
           matchConfig.Name = "microvm-*";
           networkConfig.Bridge = "br-microvm";

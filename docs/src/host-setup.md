@@ -1,6 +1,6 @@
 # Host setup
 
-In order to use nix-mariner, you need to import `mariner.nixosModules.host` module and configure the networking options in your nixos system configuration.
+In order to use nix-mariner, you need to import `mariner.nixosModules.host` module and configure the network options in your nixos system configuration.
 
 You can use the `microvm` cli tool to create and manage VMs imperatively, instead of declaring them in your NixOS config.
 
@@ -55,58 +55,23 @@ Alternatively, you could declare microvm directly in your inputs:
 }
 ```
 
-## NixOS networking additions
+## Mariner host module additions
 
-Adding the following network configuration should be enough to setup the networking.
+Importing `mariner.host` enables the `microvm.host` and defaults to on.
+`mariner.host.graphics` option runs a `waypipe` client in the host Wayland session so VM windows render on host's Wayland compositor.
+`mariner.host.network` sets up a bridge that each VM tap connects to on their own `10.0.0.0/24` subnet and allows VMs to access DNS from the host.
+The network options are a default, that might not match your network configurations. Keep it disabled and configure it yourself if it doesn't fit.
 
-See [`A simple network setup`](https://microvm-nix.github.io/microvm.nix/simple-network.html) for more information
-
-This creates a network bridge that each VM tap connects to.
-If you change the default bridge address `10.0.0.1`, you also need to set the network address accordingly in the virtual machine configuration.
+See [`A simple network setup`](https://microvm-nix.github.io/microvm.nix/simple-network.html) for more information.
 
 ```nix
-{ config, lib, pkgs, inputs, ... }:
+{ ... }:
 {
-  # microvm requires systemd networkd. You can use it alongside NetworkManager without any issues.
-  systemd.network.enable = true;
-
-  # DNS on microvm bridge. This assumes you're already using systemd-resolved.
-  services.resolved.settings.Resolve = {
-    DNSStubListenerExtra = [ "10.0.0.1" ];
+  mariner = {
+    host.enable = true;
+    host.network.enable = true;
+    host.graphics.enable = true;
   };
-
-  systemd.network.netdevs."br-microvm" = {
-    netdevConfig = {
-      Name = "br-microvm";
-      Kind = "bridge";
-    };
-  };
-
-  systemd.network.networks."10-br-microvm" = {
-    matchConfig.Name = "br-microvm";
-    networkConfig = {
-      Address = [ "10.0.0.1/24" ];
-      IPMasquerade = "ipv4";
-      ConfigureWithoutCarrier = true;
-    };
-  };
-
-  # Attach VM TAPs to the bridge automatically
-  systemd.network.networks."10-microvm-tap" = {
-    matchConfig.Name = "microvm-*";
-    networkConfig.Bridge = "br-microvm";
-  };
-
-  # Trust the VM bridge so VMs can reach host DNS / SSH
-  networking.firewall.trustedInterfaces = [
-    "br-microvm"
-  ];
-
-  # NetworkManager shouldn't manage the microvm bridge. Skip if you don't use NetworkManager
-  networking.networkmanager.unmanaged = [ "br-microvm" ];
-
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
-  boot.kernelModules = [ "vhost_vsock" ];
 }
 ```
 
