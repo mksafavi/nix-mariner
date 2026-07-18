@@ -62,6 +62,7 @@ pkgs.runCommand "nix-mariner-docs"
   }
   ''
     cp -Lr ${../docs} docs
+    cp -Lr ${../examples} examples
     chmod u+w docs/src
     cp ${modulesOptionsDoc.optionsCommonMark} docs/src/mariner-options.md
     cp ${hostOptionsDoc.optionsCommonMark} docs/src/mariner-host-options.md
