@@ -6,3 +6,4 @@ title = "nix-mariner"
 
 [output.html]
 git-repository-url = "https://github.com/mksafavi/nix-mariner"
+additional-css = ["theme/custom.css"]
