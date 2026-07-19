@@ -24,8 +24,8 @@ let
     ];
 in
 {
-  host = mkHost ./host.nix;
-  vm = mkGuest ./vm.nix;
-  ubuntu = mkGuest ./ubuntu.nix;
-  android = mkGuest ./android.nix;
+  example-host = mkHost ./host.nix;
+  example-vm = mkGuest ./vm.nix;
+  example-ubuntu = mkGuest ./ubuntu.nix;
+  example-android = mkGuest ./android.nix;
 }
