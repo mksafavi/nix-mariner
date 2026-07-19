@@ -10,12 +10,17 @@
     mariner.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, mariner, microvm }: {
-    nixosConfigurations.machine = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        mariner.nixosModules.host # also imports the microvm host module
-      ];
+  outputs =
+    {
+      nixpkgs,
+      mariner,
+    }:
+    {
+      nixosConfigurations.machine = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          mariner.nixosModules.host # also imports the microvm host module
+        ];
+      };
     };
-  };
 }
