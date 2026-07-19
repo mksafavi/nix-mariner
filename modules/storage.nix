@@ -10,7 +10,7 @@ in
   options.mariner.storage = {
     persistSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
-      default = 8 * 1024;
+      default = 32 * 1024;
       description = "Size of the /persist volume in MiB.";
     };
 
