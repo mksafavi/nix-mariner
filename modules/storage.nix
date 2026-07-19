@@ -11,25 +11,37 @@ in
     persistSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
-      description = "Size of the /persist volume in MiB.";
+      description = ''
+        Size of the /persist volume in MiB.
+        Holds the user's `$HOME` and anything written under `/persist` in the VM.
+      '';
     };
 
     nixStoreSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
-      description = "Size of the writable Nix store overlay in MiB.";
+      description = ''
+        Size of the writable Nix store overlay in MiB.
+        A writable overlay on the read-only host nix store, caches nix-shell and flake outputs built inside the VM.
+      '';
     };
 
     dockerSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
-      description = "Size of the docker volume in MiB.";
+      description = ''
+        Size of the docker volume in MiB.
+        Stores Docker containers, images and volumes. Only created when `mariner.docker.enable` is set.
+      '';
     };
 
     waydroidSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
-      description = "Size of the waydroid volume in MiB.";
+      description = ''
+        Size of the waydroid volume in MiB.
+        Holds the Android system/vendor images and Waydroid configurations.
+      '';
     };
   };
 

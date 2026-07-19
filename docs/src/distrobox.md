@@ -28,7 +28,7 @@ For more information, see [Mariner options](./mariner-options.md) and [distrobox
 
 The distrobox manifest is declarative: which boxes exist, their `image`, `hostname`, `additional_packages`, and the `autoEnter` and `replace` behavior in declared in NixOS Configuration are reproducible.
 
-The box's filesystem is mutable: package installs and edits inside the box persist between reboots but are lost when the box is rebuilt. Same as the NixOS VM, `$HOME` and other storage volumes are persistent.
+The box's filesystem is mutable: package installs and edits inside the box persist between reboots but are lost when the box container is rebuilt by making changes to the manifest. The box and its packages live on the `docker.img` volume. The user data is on `$HOME` on the `persist.img` volume, same as the NixOS VMs.
 
 ## First boot
 

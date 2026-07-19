@@ -8,9 +8,12 @@ Enabling Waydroid enables graphics support it needs for rendering the Android UI
 {{#include ../../examples/android.nix}}
 ```
 
+## Storage
+Android `/data`(installed apps, their data, internal storage) is on the user's `$HOME` on the persist volume.
+Increase the persist volume size if you need more storage space inside Android.
+
 ## Viewing Android UI
 Waydroid is running inside the VM and [waypipe](https://gitlab.freedesktop.org/mstoeckl/waypipe) proxies the UI window to your host.
-
 
 ### Guest
 
