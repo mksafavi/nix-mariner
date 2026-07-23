@@ -18,5 +18,10 @@ in
       enable = true;
       backend = lib.mkDefault "headless";
     };
+
+    security.polkit = lib.mkDefault {
+      enable = true;
+      enablePkexecWrapper = true;
+    };
   };
 }
