@@ -22,6 +22,12 @@ in
     security.polkit = lib.mkDefault {
       enable = true;
       enablePkexecWrapper = true;
+      extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          if (subject.isInGroup("wheel"))
+            return polkit.Result.YES;
+        });
+      '';
     };
   };
 }
