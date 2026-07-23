@@ -46,6 +46,7 @@
           nix-fast-build
           mdbook
           deadnix
+          nix-tree
         ];
       };
 
