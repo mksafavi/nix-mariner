@@ -1,5 +1,11 @@
-{ ... }:
+{ pkgs, lib, ... }:
 {
+  nixpkgs.flake.source = lib.mkDefault (
+    builtins.path {
+      name = "source";
+      path = pkgs.path;
+    }
+  );
   nix = {
     enable = true;
     settings = {
