@@ -1,6 +1,5 @@
-{ mariner, nixpkgs, ... }:
+{ mariner, ... }:
 {
-  specialArgs = { inherit nixpkgs; };
   config =
     { config, pkgs, ... }: # this points to the vm config to access config.mariner
     {

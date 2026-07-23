@@ -1,12 +1,10 @@
 {
   mariner,
-  nixpkgs,
   ...
 }:
 {
   microvm.vms = {
     vm-work = {
-      specialArgs = { inherit nixpkgs; };
       config = {
         imports = [ mariner.nixosModules.default ];
         mariner.cid = 4;
@@ -16,7 +14,6 @@
     };
 
     vm-test = {
-      specialArgs = { inherit nixpkgs; };
       config = {
         imports = [ mariner.nixosModules.default ];
         mariner.cid = 5;

@@ -9,7 +9,6 @@
     {
       nixosConfigurations.example = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit nixpkgs; };
         modules = [
           {
             imports = [ mariner.nixosModules.default ];
