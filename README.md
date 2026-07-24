@@ -27,7 +27,7 @@ Then choose a workflow for creating virtual machines. Create VMs [Imperatively](
   imports = [ inputs.mariner.nixosModules.default ];
   mariner = {
     cid = 3;
-    ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
+    ssh.authorizedKeys = [ "ssh-ed25519 AAAA... user@host" ];
   };
 }
 ```

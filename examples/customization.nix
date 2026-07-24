@@ -8,7 +8,7 @@
       mariner.cid = 3;
       # Change user name:
       mariner.username = "user";
-      mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
+      mariner.ssh.authorizedKeys = [ "ssh-ed25519 AAAA... your@host" ];
       # Set VM resources:
       microvm = {
         vcpu = 4;

@@ -13,7 +13,7 @@
           {
             imports = [ mariner.nixosModules.default ];
             mariner.cid = 4; # Unique per-VM CID that sets vsock number and IP address.
-            mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host"; # Replace with your ssh public key
+            mariner.ssh.authorizedKeys = [ "ssh-ed25519 AAAA... your@host" ]; # Replace with your ssh public key
           }
         ];
       };

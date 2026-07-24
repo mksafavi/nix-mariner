@@ -9,7 +9,7 @@
         imports = [ mariner.nixosModules.default ];
         mariner.cid = 4;
         mariner.username = "work";
-        mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
+        mariner.ssh.authorizedKeys = [ "ssh-ed25519 AAAA... your@host" ];
       };
     };
 
@@ -18,7 +18,7 @@
         imports = [ mariner.nixosModules.default ];
         mariner.cid = 5;
         mariner.username = "user";
-        mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... your@host";
+        mariner.ssh.authorizedKeys = [ "ssh-ed25519 AAAA... your@host" ];
       };
     };
   };

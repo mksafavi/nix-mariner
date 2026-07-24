@@ -8,9 +8,9 @@ let
   cfg = config.mariner.ssh;
 in
 {
-  options.mariner.ssh.authorizedKey = lib.mkOption {
-    type = lib.types.str;
-    description = "SSH authorized public key for vm user and root";
+  options.mariner.ssh.authorizedKeys = lib.mkOption {
+    type = lib.types.listOf lib.types.singleLineStr;
+    description = "A list of SSH authorized public keys for vm user and root";
   };
 
   config = {
@@ -25,8 +25,8 @@ in
       ];
     };
 
-    users.users.${vmUser}.openssh.authorizedKeys.keys = [ cfg.authorizedKey ];
+    users.users.${vmUser}.openssh.authorizedKeys.keys = cfg.authorizedKeys;
 
-    users.users.root.openssh.authorizedKeys.keys = [ cfg.authorizedKey ];
+    users.users.root.openssh.authorizedKeys.keys = cfg.authorizedKeys;
   };
 }

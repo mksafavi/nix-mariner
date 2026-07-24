@@ -1,5 +1,5 @@
 { ... }:
 {
   mariner.cid = 3;
-  mariner.ssh.authorizedKey = "ssh-ed25519 AAAA... user@host";
+  mariner.ssh.authorizedKeys = [ "ssh-ed25519 AAAA... user@host" ];
 }
