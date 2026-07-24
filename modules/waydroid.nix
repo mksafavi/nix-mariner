@@ -27,6 +27,10 @@ in
   config = lib.mkIf cfg.enable {
     virtualisation.waydroid.enable = true;
 
+    environment.systemPackages = with pkgs; [
+      waydroid-helper
+    ];
+
     mariner.graphics.enable = lib.mkDefault true;
 
     systemd.services.waydroid-init = {
