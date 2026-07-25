@@ -49,6 +49,20 @@ By default Waydroid downloads the Android system and vendor images on first init
 After that the images persist on the waydroid volume and waydroid can start offline.
 You can also manually copy your images to `/etc/waydroid-extra/images` which will override the downloaded images.
 
+## Google Play Services
+If you need Google Play store use the `GAPPS` image variant. You can also install a Google Play services package like `LiteGapps` using `waydroid-helper`.
+
+```shell
+run-waypipe waydroid-helper
+```
+
+For activating Google Play Store you need to certify the waydroid system with a Google Account at https://docs.waydro.id/faq/google-play-certification
+
+## Enable ARM64 to X86 translation layer
+If you try to install an application that doesn't publish X86 binaries you'll get this error: `not compatible with your device`.
+
+You need to install an ARM64 translation layer using `waydroid-helper` and clear Play store data. Install `libhoudini` for Intel machines or `libndk` for AMD. Installing both will crash Waydroid at boot.
+
 ## Known limitations
 
 - No audio: Audio is not configured yet
