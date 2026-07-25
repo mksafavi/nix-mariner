@@ -28,4 +28,5 @@ in
   example-vm = mkGuest ./vm.nix;
   example-ubuntu = mkGuest ./ubuntu.nix;
   example-android = mkGuest ./android.nix;
+  example-graphical = mkGuest ./graphical.nix;
 }
