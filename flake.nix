@@ -55,7 +55,7 @@
           systemsAttrs = nixpkgs.lib.mapAttrs' (
             n: c:
             if c.config.microvm ? runner then
-              nixpkgs.lib.nameValuePair "microvm-${n}" c.config.microvm.runner.qemu
+              nixpkgs.lib.nameValuePair "microvm-${n}" c.config.microvm.declaredRunner
             else
               nixpkgs.lib.nameValuePair "host-${n}" c.config.system.build.toplevel
           ) self.nixosConfigurations;
