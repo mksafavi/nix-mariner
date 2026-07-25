@@ -52,20 +52,39 @@
 
       checks.${system} =
         let
-          systemsAttrs = nixpkgs.lib.mapAttrs' (
-            n: c:
-            if c.config.microvm ? runner then
-              nixpkgs.lib.nameValuePair "microvm-${n}" c.config.microvm.declaredRunner
-            else
-              nixpkgs.lib.nameValuePair "host-${n}" c.config.system.build.toplevel
-          ) self.nixosConfigurations;
+          hypervisors = nixpkgs.lib.filter (hv: hv != "vfkit") microvm.lib.hypervisors;
+          guests = nixpkgs.lib.filterAttrs (_: c: c.config.microvm ? runner) self.nixosConfigurations;
+          hosts = nixpkgs.lib.filterAttrs (_: c: !(c.config.microvm ? runner)) self.nixosConfigurations;
+
+          guestsAttrs = nixpkgs.lib.mergeAttrsList (
+            nixpkgs.lib.map (
+              hv:
+              nixpkgs.lib.mapAttrs' (
+                n: c:
+                nixpkgs.lib.nameValuePair "microvm-${hv}-${n}"
+                  (c.extendModules {
+                    modules = [
+                      {
+                        microvm.hypervisor = hv;
+                      }
+                    ];
+                  }).config.microvm.declaredRunner
+              ) guests
+            ) hypervisors
+          );
+
+          hostsAttrs = nixpkgs.lib.mapAttrs' (
+            n: c: nixpkgs.lib.nameValuePair "host-${n}" c.config.system.build.toplevel
+          ) hosts;
+
           devShellsAttrs = nixpkgs.lib.mapAttrs' (
             n: nixpkgs.lib.nameValuePair "devShell-${n}"
           ) self.devShells.${system};
+
           docsAttrs = {
             "docs" = self.packages.${system}.docs;
           };
         in
-        (systemsAttrs // devShellsAttrs // docsAttrs);
+        (guestsAttrs // hostsAttrs // devShellsAttrs // docsAttrs);
     };
 }
