@@ -12,6 +12,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    warnings = lib.optional (config.microvm.hypervisor != "qemu") ''
+      nix-mariner graphics is only verified with "qemu" hypervisor and might not work with "${config.microvm.hypervisor}"
+    '';
+
     hardware.graphics.enable = true;
 
     microvm.graphics = {
