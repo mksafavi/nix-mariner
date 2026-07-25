@@ -32,8 +32,10 @@ sudo systemctl start microvm@example.service
 
 Or start it in foreground:
 ```shell
+sudo systemctl start microvm-virtiofsd@example.service
 sudo microvm -r example
 ```
+`microvm -r` runs the VM directly instead of through `systemd`, if you are using `virtiofs` (default) for shared storage you need to start the `virtiofsd` service first.
 
 You can now ssh into it:
 ```shell
