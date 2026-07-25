@@ -18,8 +18,24 @@ jobs:
       - run: |
           deadnix --fail
 
-  build:
+  eval:
     runs-on: ubuntu-24.04
+    outputs:
+      checks: ${{ steps.list.outputs.checks }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: DeterminateSystems/nix-installer-action@v22
+      - id: list
+        run: |
+          echo "checks=$(nix eval --json .#checks.x86_64-linux --apply builtins.attrNames)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: eval
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        check: ${{ fromJSON(needs.eval.outputs.checks) }}
     steps:
       - uses: actions/checkout@v7
       - uses: wimpysworld/nothing-but-nix@v10
@@ -31,4 +47,4 @@ jobs:
         with:
           devShell: .#devShells.x86_64-linux.default
       - run: |
-          nix-fast-build --skip-cached --no-nom --retries 3
+          nix-fast-build --skip-cached --no-nom --retries 3 --flake .#checks.x86_64-linux.${{ matrix.check }}
