@@ -54,6 +54,8 @@
         let
           hypervisors = nixpkgs.lib.filter (hv: hv != "vfkit") microvm.lib.hypervisors;
           guests = nixpkgs.lib.filterAttrs (_: c: c.config.microvm ? runner) self.nixosConfigurations;
+          headlessGuests = nixpkgs.lib.filterAttrs (_: c: !c.config.microvm.graphics.enable) guests;
+          guestsForHypervisor = hv: if hv == "qemu" then guests else headlessGuests;
           hosts = nixpkgs.lib.filterAttrs (_: c: !(c.config.microvm ? runner)) self.nixosConfigurations;
 
           guestsAttrs = nixpkgs.lib.mergeAttrsList (
@@ -69,7 +71,7 @@
                       }
                     ];
                   }).config.microvm.declaredRunner
-              ) guests
+              ) (guestsForHypervisor hv)
             ) hypervisors
           );
 
