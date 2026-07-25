@@ -8,6 +8,25 @@ let
 in
 {
   options.mariner.storage = {
+    readOnlyStoreShare = lib.mkOption {
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "virtiofs"
+          "9p"
+        ]
+      );
+      default =
+        {
+          "kvmtool" = "9p";
+          "firecracker" = null;
+        }
+        .${config.microvm.hypervisor} or "virtiofs";
+      defaultText = "`defaults to `virtiofs` except `9p` on kvmtool and `null` on firecracker";
+      description = ''
+        Share the host machine /nix/store as a read-only share.
+      '';
+    };
+
     persistSizeMiB = lib.mkOption {
       type = lib.types.ints.positive;
       default = 32 * 1024;
@@ -53,13 +72,12 @@ in
 
     microvm.writableStoreOverlay = "/nix/.rw-store";
 
-    microvm.shares = [
-      {
-        tag = "ro-store";
-        source = "/nix/store";
-        mountPoint = "/nix/.ro-store";
-      }
-    ];
+    microvm.shares = lib.optional (config.mariner.storage.readOnlyStoreShare != null) {
+      tag = "ro-store";
+      source = "/nix/store";
+      mountPoint = "/nix/.ro-store";
+      proto = config.mariner.storage.readOnlyStoreShare;
+    };
 
     microvm.volumes = [
       {
