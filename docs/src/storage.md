@@ -8,9 +8,7 @@ See [options reference](./mariner-options.md) for the available volumes and size
 ## Nix store share
 
 The host's `/nix/store` is shared into the guest as a read-only filesystem, with a writable overlay on top of it.
-You can select the protocol for sharing the host's store  by `mariner.storage.readOnlyStoreShare` which supports `virtiofs`,`9p` and `null` if you don't want to share it.
-
-`virtiofs` is faster than `9p` but requires the `microvm-virtiofsd@<name>.service` to run on the host besides the VM which is automatically started as a dependency of `microvm@<name>.service`.
+Set `mariner.storage.readOnlyStoreShare` to select the protocol for sharing the host's store or set it to `null` if you don't want to share the store.
 
 ## Volume sizes
 

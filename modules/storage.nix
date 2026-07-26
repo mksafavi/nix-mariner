@@ -25,6 +25,9 @@ in
       description = ''
         Sets the protocol for sharing the host machine /nix/store as a read-only share. setting it to `null` disables it.
         The default is set based on the protocols that `microvm.hypervisor` supports.
+
+        `virtiofs` performs better than `9p` and requires `microvm-virtiofsd@<name>.service` to run on the host besides the VM
+        which is automatically started as a dependency of `microvm@<name>.service`.
       '';
     };
 

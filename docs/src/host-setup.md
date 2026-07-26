@@ -29,7 +29,7 @@ Alternatively, you could declare microvm directly in your inputs:
 - `mariner.host.graphics` runs a `waypipe` client so VMs can render windows on the host Wayland compositor.
 - `mariner.host.network` sets up a bridge that each VM connects to. It's a default that might not match your setup. Keep it disabled and configure networking yourself if it doesn't fit. See microvm.nix's [`a simple network setup`](https://microvm-nix.github.io/microvm.nix/simple-network.html).
 
-- `mariner.host.network.exposeDNS` allows the VM to use the host's DNS server. By default VMs resolve DNS themselves. If you enable this, you also need to set the VM `mariner.network.dns` option to the bridge gateway address.
+- By default VMs resolve DNS themselves. `mariner.host.network.exposeDNS` allows the VM to use the host's DNS server instead.
 
 See [host options](mariner-host-options.md) for more information.
 
