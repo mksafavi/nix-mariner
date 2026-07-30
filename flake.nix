@@ -41,6 +41,7 @@
 
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          nixd
           nixfmt
           nixfmt-tree
           nix-fast-build
