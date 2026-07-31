@@ -17,6 +17,14 @@
       mem = lib.mkDefault 4096;
 
       vsock.cid = config.mariner.cid;
+
+      balloon = lib.mkDefault (
+        lib.elem config.microvm.hypervisor [
+          "qemu"
+          "cloud-hypervisor"
+          "crosvm"
+        ]
+      );
     };
 
     boot.tmp = lib.mkDefault {
