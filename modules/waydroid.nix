@@ -79,8 +79,9 @@ in
         ln -sf /dev/null $XDG_RUNTIME_DIR/pulse/native
       '';
       script = ''
-        ${pkgs.waypipe}/bin/waypipe --vsock -s 2:6000 server \
-        ${pkgs.waydroid}/bin/waydroid session start
+        ${pkgs.waypipe}/bin/waypipe \
+        ${lib.optionalString (config.microvm.graphics.vulkan != null) "--no-gpu"} --vsock -s 2:6000 \
+        server ${pkgs.waydroid}/bin/waydroid session start
       '';
     };
   };
