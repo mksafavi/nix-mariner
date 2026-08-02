@@ -34,6 +34,8 @@ Or start it in foreground:
 ```shell
 sudo systemctl start microvm-virtiofsd@example.service
 sudo microvm -r example
+
+[vm@nixos:~]$ poweroff # To exit the Virtual machine.
 ```
 `microvm -r` runs the VM directly instead of through `systemd`, if you are using `virtiofs` (default) for shared storage you need to start the `virtiofsd` service first.
 
