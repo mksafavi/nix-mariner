@@ -7,6 +7,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@v22
@@ -20,6 +21,7 @@ jobs:
 
   eval:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     outputs:
       checks: ${{ steps.list.outputs.checks }}
     steps:
@@ -31,6 +33,7 @@ jobs:
 
   build:
     needs: eval
+    timeout-minutes: 10
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
