@@ -29,7 +29,7 @@ sudo waydroid log
 ```
 
 ### Host
-The waypipe client service is enabled when you import mariner's host module, and starts automatically with your graphical session:
+You need to set `mariner.host.graphics.enable` to install the waypipe client service. It starts automatically with your graphical session:
 ```shell
 systemctl status --user mariner-waypipe-client.service
 ```
