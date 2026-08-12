@@ -8,6 +8,14 @@ let
 in
 {
   options.mariner.network = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        Whether to enable guest LAN interface.
+      '';
+    };
+
     address = lib.mkOption {
       type = lib.types.str;
       default = "10.0.0.${toString config.mariner.cid}/24";
@@ -40,7 +48,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     systemd.network.enable = true;
 
     networking.nftables.enable = true;
