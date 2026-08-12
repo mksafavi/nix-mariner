@@ -20,8 +20,8 @@ Alternatively, you could declare microvm directly in your inputs:
 
 ## Mariner host module additions
 
-`mariner.host` enables the microvm.nix `microvm.host` module and adds its own host-side options:
-
+`mariner.host` enables the microvm.nix `microvm.host` module and adds its own host-side options.
+You can enable optional features with:
 ```nix
 {{#include ../../examples/host.nix:host-module}}
 ```
