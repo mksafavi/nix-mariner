@@ -52,3 +52,18 @@ sudo resize2fs /var/lib/microvms/vm/persist.img
 
 sudo systemctl start microvm@vm.service
 ```
+
+## Clearing a VM
+
+To clear a VM's state, remove the appropriate image files in `/var/lib/microvms/<name>/`.
+
+- `persist.img`: $HOME and user data
+- `nix-store.img`: the writable store overlay
+- `docker.img`: the docker volume (only if `mariner.docker.enable` is set)
+- `waydroid.img`: the waydroid volume (only if `mariner.waydroid.enable` is set)
+
+```shell
+sudo systemctl stop microvm@<name>.service
+sudo rm /var/lib/microvms/<name>/*.img
+```
+
