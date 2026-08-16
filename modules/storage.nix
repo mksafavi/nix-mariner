@@ -15,16 +15,10 @@ in
           "9p"
         ]
       );
-      default =
-        {
-          "kvmtool" = "9p";
-          "firecracker" = null;
-        }
-        .${config.microvm.hypervisor} or "virtiofs";
-      defaultText = "defaults to `virtiofs` on all hypervisors except `9p` on kvmtool and `null` on firecracker";
+      default = null;
       description = ''
         Sets the protocol for sharing the host machine /nix/store as a read-only share. setting it to `null` disables it.
-        The default is set based on the protocols that `microvm.hypervisor` supports.
+        Check the `microvm.hypervisor` supported protocols before setting this option.
 
         `virtiofs` performs better than `9p` and requires `microvm-virtiofsd@<name>.service` to run on the host besides the VM
         which is automatically started as a dependency of `microvm@<name>.service`.
