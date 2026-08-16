@@ -32,7 +32,7 @@ in
     };
 
     persistSizeMiB = lib.mkOption {
-      type = lib.types.ints.positive;
+      type = lib.types.nullOr lib.types.ints.positive;
       default = 32 * 1024;
       description = ''
         Size of the /persist volume in MiB.
@@ -41,7 +41,7 @@ in
     };
 
     nixStoreSizeMiB = lib.mkOption {
-      type = lib.types.ints.positive;
+      type = lib.types.nullOr lib.types.ints.positive;
       default = 32 * 1024;
       description = ''
         Size of the writable Nix store overlay in MiB.
@@ -50,8 +50,8 @@ in
     };
 
     dockerSizeMiB = lib.mkOption {
-      type = lib.types.ints.positive;
-      default = 32 * 1024;
+      type = lib.types.nullOr lib.types.ints.positive;
+      default = if config.mariner.docker.enable then 32 * 1024 else null;
       description = ''
         Size of the docker volume in MiB.
         Stores Docker containers, images and volumes. Only created when `mariner.docker.enable` is set.
@@ -59,8 +59,8 @@ in
     };
 
     waydroidSizeMiB = lib.mkOption {
-      type = lib.types.ints.positive;
-      default = 32 * 1024;
+      type = lib.types.nullOr lib.types.ints.positive;
+      default = if config.mariner.waydroid.enable then 32 * 1024 else null;
       description = ''
         Size of the waydroid volume in MiB.
         Holds the Android system/vendor images and Waydroid configurations.
@@ -83,31 +83,27 @@ in
       proto = config.mariner.storage.readOnlyStoreShare;
     };
 
-    microvm.volumes = [
-      {
+    microvm.volumes =
+      (lib.optional (config.mariner.storage.persistSizeMiB != null) {
         image = "persist.img";
         mountPoint = "/persist";
         size = config.mariner.storage.persistSizeMiB;
-      }
-
-      {
+      })
+      ++ (lib.optional (config.mariner.storage.nixStoreSizeMiB != null) {
         image = "nix-store.img";
         mountPoint = "/nix/.rw-store";
         size = config.mariner.storage.nixStoreSizeMiB;
-      }
-
-      (lib.mkIf config.mariner.docker.enable {
+      })
+      ++ (lib.optional (config.mariner.storage.dockerSizeMiB != null) {
         image = "docker.img";
         mountPoint = "/var/lib/docker";
         size = config.mariner.storage.dockerSizeMiB;
       })
-
-      (lib.mkIf config.mariner.waydroid.enable {
+      ++ (lib.optional (config.mariner.storage.waydroidSizeMiB != null) {
         image = "waydroid.img";
         mountPoint = "/var/lib/waydroid";
         size = config.mariner.storage.waydroidSizeMiB;
-      })
-    ];
+      });
 
     fileSystems = {
       "/home" = {
