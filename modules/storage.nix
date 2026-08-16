@@ -42,7 +42,7 @@ in
 
     nixStoreSizeMiB = lib.mkOption {
       type = lib.types.nullOr lib.types.ints.positive;
-      default = 32 * 1024;
+      default = null;
       description = ''
         Size of the writable Nix store overlay in MiB.
         A writable overlay on the read-only host nix store, caches nix-shell and flake outputs built inside the VM.
