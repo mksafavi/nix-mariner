@@ -75,6 +75,7 @@ in
       source = "/nix/store";
       mountPoint = "/nix/.ro-store";
       proto = config.mariner.storage.readOnlyStoreShare;
+      readOnly = true;
     };
 
     microvm.volumes =
