@@ -5,8 +5,8 @@
 }:
 {
   options.mariner.cid = lib.mkOption {
-    type = lib.types.ints.unsigned;
-    description = "VSOCK context ID. Must be >= 3 and unique per host";
+    type = lib.types.ints.between 3 254;
+    description = "VSOCK context ID";
   };
 
   config = {
