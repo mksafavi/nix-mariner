@@ -50,7 +50,8 @@ in
         RestartSec = "10s";
       };
       script = ''
-        ${pkgs.waydroid}/bin/waydroid init -s ${cfg.systemImage}
+        ${pkgs.waydroid}/bin/waydroid --verbose --details-to-stdout init -s ${cfg.systemImage}
+
       '';
     };
 
