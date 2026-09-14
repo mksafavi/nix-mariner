@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@v22
-      - uses: DeterminateSystems/update-flake-lock@v28
+      - uses: DeterminateSystems/update-flake-lock@v29
         with:
           token: ${{ secrets.NIX_UPDATE_FLAKE_TOKEN }}
           pr-title: "Update flake.lock"
