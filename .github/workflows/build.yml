@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@v23
       - uses: rrbutani/use-nix-shell-action@v1
         with:
           devShell: .#devShells.x86_64-linux.default
@@ -26,7 +26,7 @@ jobs:
       checks: ${{ steps.list.outputs.checks }}
     steps:
       - uses: actions/checkout@v7
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@v23
       - id: list
         run: |
           echo "checks=$(nix eval --json .#checks.x86_64-linux --apply builtins.attrNames)" >> "$GITHUB_OUTPUT"
@@ -45,7 +45,7 @@ jobs:
         with:
           hatchet-protocol: 'holster'
           root-safe-haven: '10240'
-      - uses: DeterminateSystems/nix-installer-action@v22
+      - uses: DeterminateSystems/nix-installer-action@v23
       - uses: rrbutani/use-nix-shell-action@v1
         with:
           devShell: .#devShells.x86_64-linux.default
